@@ -1,4 +1,0 @@
-GSF
-===
-
-Geo Site Framework
