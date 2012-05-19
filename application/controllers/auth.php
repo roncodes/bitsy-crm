@@ -22,7 +22,7 @@ class Auth extends CI_Controller
 			$this->load->view('auth/general_message', array('message' => $message));
 			$this->load->view('wrappers/footer');
 		} else {
-			redirect('/auth/login/');
+			redirect('welcome_message');
 		}
 	}
 
@@ -97,9 +97,8 @@ class Auth extends CI_Controller
 					$data['captcha_html'] = $this->_create_captcha();
 				}
 			}
-			$this->load->view('auth/login_form', $data);
+			$this->load->view('welcome_message', $data);
 		}
-		$this->load->view('wrappers/footer');
 	}
 
 	/**

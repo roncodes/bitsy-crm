@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>Geo Site Framework | Administration</title>
+		<title>Clients Manager | Administration</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="">
 		<meta name="author" content="Ronald A. Richardson">
@@ -28,27 +28,12 @@
 	<div class="navbar navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
-				<a class="brand" href="<?=base_url()?>"><i class="icon-flag icon-white" ></i> GSF</a>
+				<a class="brand" href="<?=base_url()?>">Clients Manager Admin</a>
 				<div class="nav-collapse">
 					<ul class="nav">
 						<li <?php if($page==''){ ?>class="active"<?php } ?>><a href="<?=base_url()?>admin">Dashboard</a></li>
-						<li class="dropdown <?php if($page=='posts'){ ?>active<?php } ?>">
-							<a href="<?=base_url()?>admin/posts" class="dropdown-toggle" data-toggle="dropdown">Posts <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<a href="<?=base_url()?>admin/posts/new_post">New Post</a>
-								<a href="<?=base_url()?>admin/posts/edit_posts">Edit Posts</a>
-								<a href="<?=base_url()?>admin/posts/categories">Categories</a>
-							</ul>
-						</li>
-						<li class="dropdown <?php if($page=='pages'){ ?>active<?php } ?>">
-							<a href="<?=base_url()?>admin/pages" class="dropdown-toggle" data-toggle="dropdown">Pages <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<a href="<?=base_url()?>admin/pages/new_page">New Page</a>
-								<a href="<?=base_url()?>admin/pages/edit_pages">Edit Pages</a>
-								<a href="<?=base_url()?>admin/pages/templates">Templates</a>
-							</ul>
-						</li>
-						<li <?php if($page=='users'){ ?>class="active"<?php } ?>><a href="<?=base_url()?>admin/users">Users</a></li>
+						<li <?php if($page=='clients'){ ?>class="active"<?php } ?>><a href="<?=base_url()?>admin/clients">Clients</a></li>
+						<li <?php if($page=='invoices'){ ?>class="active"<?php } ?>><a href="<?=base_url()?>admin/invoices">Invoices</a></li>
 					</ul>
 					<ul class="nav pull-right">
 						<li class="divider-vertical"></li>

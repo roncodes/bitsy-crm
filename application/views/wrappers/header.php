@@ -27,7 +27,11 @@
 				<a class="brand" href="<?=base_url()?>">Clients Manager</a>
 				<div class="nav-collapse">
 					<ul class="nav">
+						<?php if(isLoggedIn()){ ?>
+						<li class="active"><a href="<?=base_url()?>">Home</a></li>
+						<?php } else { ?>
 						<li class="active"><a href="<?=base_url()?>">Login</a></li>
+						<?php } ?>
 					</ul>
 					<?php if(isLoggedIn()){ ?>
 					<ul class="nav pull-right">

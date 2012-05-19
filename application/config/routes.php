@@ -39,8 +39,8 @@
 */
 $route[''] = "welcome";
 $route['admin'] = "admin";
-$route['admin/pages/(:any)'] = "admin/$1";
-$route['admin/posts/(:any)'] = "admin/$1";
+$route['admin/clients/(:any)'] = "admin/$1";
+$route['admin/invoices/(:any)'] = "admin/$1";
 $route['admin/(:any)'] = "admin/$1";
 $route['auth'] = "auth";
 $route['auth/(:any)'] = "auth/$1";

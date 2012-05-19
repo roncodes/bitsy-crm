@@ -1,4 +1,4 @@
-<div class="welcome">
+<div class="panel">
 	<div class="row-fluid fluff">
 		<div class="span10">
 			<div class="page-header">
