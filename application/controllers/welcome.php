@@ -62,7 +62,7 @@ class Welcome extends CI_Controller {
 		$data['page'] = $this->uri->segment(1);
 		$this->load->view('wrappers/header', $data);
 		$this->load->view($view, $data);
-		$this->load->view('wrappers/footer', $data);
+		// $this->load->view('wrappers/footer', $data);
 	}
 	
 	private function _get_page_by_uri($uri, $page=null)
