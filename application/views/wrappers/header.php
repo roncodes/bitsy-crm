@@ -27,16 +27,16 @@
 				<a class="brand" href="<?=base_url()?>">Clients Manager</a>
 				<div class="nav-collapse">
 					<ul class="nav">
-						<?php if(isLoggedIn()){ ?>
+						<?php if(logged_in()){ ?>
 						<li class="active"><a href="<?=base_url()?>">Home</a></li>
 						<?php } else { ?>
 						<li class="active"><a href="<?=base_url()?>">Login</a></li>
 						<?php } ?>
 					</ul>
-					<?php if(isLoggedIn()){ ?>
+					<?php if(logged_in()){ ?>
 					<ul class="nav pull-right">
 						<li class="divider-vertical"></li>
-						<?php if(isAdminUser()){ ?>
+						<?php if(is_admin()){ ?>
 						<li><a href="<?=base_url()?>admin">Admin</a></li>
 						<?php } ?>
 						<li><a href="<?=base_url()?>auth/logout">Logout</a></li>

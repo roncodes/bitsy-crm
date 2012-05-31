@@ -1,4 +1,4 @@
-<?php if(isLoggedIn()){ ?>
+<?php if(logged_in()){ ?>
 <div class="panel">
 	<div class="page-header">
 		<h1>Dashboard <small>welcome, here you can view and pay all your invoices, see your projects status and info</small></h1>
@@ -25,9 +25,9 @@
 		<?php echo form_open('/auth/login', array('class'=>'form-horizontal')); ?>
 			<fieldset>
 				<div class="control-group">
-					<label class="control-label" for="login">Username/ Email</label>
+					<label class="control-label" for="email">Email</label>
 					<div class="controls">
-						<input type="text" class="input-xlarge" id="login" name="login">
+						<input type="text" class="input-xlarge" id="email" name="email">
 					</div>
 				</div>
 				<div class="control-group">

@@ -37,18 +37,10 @@
 | in the URL cannot be matched to a valid route.
 |
 */
-$route[''] = "welcome";
-$route['admin'] = "admin";
-$route['admin/clients/(:any)'] = "admin/$1";
-$route['admin/invoices/(:any)'] = "admin/$1";
-$route['admin/(:any)'] = "admin/$1";
-$route['auth'] = "auth";
-$route['auth/(:any)'] = "auth/$1";
-$route['default_controller'] = "welcome";
-$route['(:any)'] = "welcome";
-// $route['uploader'] = "uploader";
-$route['404_override'] = '';
 
+$route['default_controller'] = 'welcome';
+$route['404_override'] = '';
+$route['admin'] = 'admin/dashboard';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
