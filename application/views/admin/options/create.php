@@ -1,3 +1,4 @@
+<div class="admin-panel">
 <div class="page-header">
 	<h1>Create Option</h1>
 </div>
@@ -9,3 +10,4 @@
 		<a href="<?=base_url('admin/options')?>" class="btn">Cancel</a>
 	</div>
 <?=form_close()?>
+</div>

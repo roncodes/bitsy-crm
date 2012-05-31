@@ -6,7 +6,7 @@ class Auth extends MY_Controller {
 	{
 		parent::__construct();
 
-		$this->data['folder_name'] = 'website/';
+		$this->data['folder_name'] = 'welcome/index';
 	}
 
 	function index()

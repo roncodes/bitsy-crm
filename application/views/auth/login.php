@@ -1,3 +1,4 @@
+<div class="panel">
 <div class="page-header">
 	<h1>Login <small>Please login with your email address and password below.</small></h1>
 </div>
@@ -10,7 +11,8 @@
 			<a href="<?=base_url('auth/forgot_password')?>">Forgot password?</a>
 		</div>
 	</div>
-	<div class="form-actions">
+	<div class="controls">
 		<?=form_submit('submit', 'Login', 'class="btn btn-primary"')?>
 	</div>
 <?=form_close()?>
+</div>

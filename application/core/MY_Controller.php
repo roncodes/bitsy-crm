@@ -68,7 +68,7 @@ class MY_Controller extends CI_Controller {
 
         if (is_admin())
         {
-	        $this->output->enable_profiler(TRUE);
+	        $this->output->enable_profiler(FALSE);
         }
 
         // Load the view into the data

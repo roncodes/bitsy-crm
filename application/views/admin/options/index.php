@@ -1,5 +1,6 @@
+<div class="admin-panel">
 <div class="page-header">
-	<a href="<?=base_url('admin/options/create')?>" class="btn pull-right">Create Option</a>
+	<a href="<?=base_url('admin/options/create')?>" class="btn btn-primary pull-right">Create Option</a>
 	<h1>All Options</h1>
 </div>
 <?php if ( ! empty($settings)): ?>
@@ -24,3 +25,4 @@
 <?php else: ?>
 <div class="alert alert-error">There are currently no options in the database.</div>
 <?php endif; ?>
+</div>

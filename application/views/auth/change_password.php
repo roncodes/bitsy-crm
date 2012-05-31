@@ -1,3 +1,4 @@
+<div class="panel">
 <div class="page-header">
 	<h1>Change Password</h1>
 </div>
@@ -6,7 +7,8 @@
 	<?php bootstrap_password('new', 'New Password'); ?>
 	<?php bootstrap_password('new_confirm', 'Confirm New Password'); ?>
 	<?=form_input($user_id)?>
-	<div class="form-actions">
+	<div class="controls">
 		<?=form_submit('submit', 'Submit', 'class="btn btn-primary"')?>
 	</div>
 <?=form_close()?>
+</div>

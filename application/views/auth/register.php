@@ -1,3 +1,4 @@
+<div class="panel">
 <div class="page-header">
 	<h1>Register</h1>
 </div>
@@ -10,7 +11,8 @@
 	<?php bootstrap_input('phone', 'Phone'); ?>
 	<?php bootstrap_password('password', 'Password'); ?>
 	<?php bootstrap_password('password_confirm', 'Confirm Password'); ?>
-	<div class="form-actions">
+	<div class="controls">
 		<?=form_submit('submit', 'Register', 'class="btn btn-primary"')?>
 	</div>
 <?=form_close()?>
+</div>

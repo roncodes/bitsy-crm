@@ -8,14 +8,14 @@
 	<meta name="description" content="<?=$meta_desc?>"> 
 	<meta name="keywords" content="<?=$meta_keywords?>"> 
 	
-	<link href="<?=base_url('public/bootstrap/css/bootstrap.min.css')?>" rel="stylesheet" media="all">
-	<link href="<?=base_url('public/c/fancybox.css')?>" rel="stylesheet" media="all">
-	<link href="<?=base_url('public/c/main.css')?>" rel="stylesheet" media="all">
+	<link href="<?=base_url('public/css/bootstrap.min.css')?>" rel="stylesheet" media="all">
+	<link href="<?=base_url('public/css/fancybox.css')?>" rel="stylesheet" media="all">
+	<link href="<?=base_url('public/css/main.css')?>" rel="stylesheet" media="all">
 	
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-	<script src="<?=base_url('public/bootstrap/js/bootstrap.min.js')?>"></script>
-	<script src="<?=base_url('public/j/jquery.fancybox-1.3.1.pack.js')?>"></script>
-	<script src="<?=base_url('public/j/admin.js')?>"></script>
+	<script src="<?=base_url('public/js/bootstrap.min.js')?>"></script>
+	<script src="<?=base_url('public/js/jquery.fancybox-1.3.1.pack.js')?>"></script>
+	<script src="<?=base_url('public/js/admin.js')?>"></script>
 	
 	<!--[if IE]>
 	  	<script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -45,14 +45,11 @@
 				<div class="nav-collapse">
 					<ul class="nav">
 						<li <?php if ($this->uri->segment(2) == '') echo 'class="active"'; ?>><a href="<?=base_url('admin')?>">Dashboard</a></li>
-						<li <?php if ($this->uri->segment(2) == 'plans') echo 'class="active"'; ?>><a href="<?=base_url('admin/plans')?>">Plans</a></li>
-						<li <?php if ($this->uri->segment(2) == 'users') echo 'class="active"'; ?>><a href="<?=base_url('admin/users')?>">Users</a></li>
+						<li <?php if ($this->uri->segment(2) == 'clients') echo 'class="active"'; ?>><a href="<?=base_url('admin/clients')?>">Clients</a></li>
 						<li <?php if ($this->uri->segment(2) == 'options') echo 'class="active"'; ?>><a href="<?=base_url('admin/options')?>">Options</a></li>
 					</ul>
 					<ul class="nav pull-right">
-						<li><a href="<?=base_url()?>">View Site</a></li>
-						<li><a id="inline_debug" href="#codeigniter_debug">Debug Vars</a></li>
-						<li><a id="inline_profiler" href="#codeigniter_profiler">Profiler</a></li>
+						<li><a href="<?=base_url()?>">Frontend</a></li>
 						<li><a href="<?=base_url('auth/logout')?>">Logout</a></li>
 					</ul>
 				</div>
@@ -73,15 +70,6 @@
 		?>
 		<?php echo showflashmsg(); ?>
 		<?php echo $yield; ?>
-	</div>
-	<div class="container">
-		<footer class="footer">
-			<p class="pull-right"><?=$settings['site_name']?>. Copyright <?=date('Y')?>. all rights reserved.</p>
-			<p>
-				Built by <a href="http://vuurr.com/">Vuurr</a> at <a href="http://gangplankhq.com/">Gangplank</a> in Chandler, Arizona.<br>
-				Parts of this code licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License v2.0</a>.
-			</p>
-		</footer>
 	</div>
 </body>
 </html>
