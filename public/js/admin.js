@@ -16,6 +16,8 @@ $(document).ready(function() {
 	});
 	
 	$('a').tooltip();
+	
+	update_preview();
 });
 
 var add_invoice_item = function() {

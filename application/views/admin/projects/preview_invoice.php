@@ -1,5 +1,5 @@
 <div id="invoice">
-	<div class="invoice-label">INVOICE #01</div>
+	<div class="invoice-label">INVOICE #<?=$invoice_preview['id']?></div>
 	<div class="row-fluid">
 		<div class="span7">
 			<div class="invoice-client">
@@ -19,7 +19,7 @@
 		</div>
 	</div>
 	<div class="row-fluid">
-		<div class="span6">...</div>
+		<div class="span6"><?=$invoice_preview['description']?></div>
 		<div class="span6">
 			<table class="table table-bordered">
 				<tbody>
@@ -33,7 +33,7 @@
 					</tr>
 					<tr>
 						<td>Amount Due</td>
-						<td>$300</td>
+						<td>$<?=$invoice_preview['amount_due']?></td>
 					</tr>
 			  </tbody>
 			</table>

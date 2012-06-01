@@ -1124,3 +1124,7 @@ ERROR - 2012-06-01 02:30:38 --> Severity: Notice  --> Undefined variable: id C:\
 ERROR - 2012-06-01 02:32:44 --> Severity: Notice  --> Undefined variable: project C:\wamp\www\client_manager\application\controllers\admin\projects.php 29
 ERROR - 2012-06-01 02:32:44 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\controllers\admin\projects.php 29
 ERROR - 2012-06-01 02:40:38 --> 404 Page Not Found --> projects/admin
+ERROR - 2012-06-01 03:01:42 --> Severity: Notice  --> Undefined variable: preview_invoice C:\wamp\www\client_manager\application\views\admin\projects\preview_invoice.php 2
+ERROR - 2012-06-01 03:01:46 --> Severity: Notice  --> Undefined variable: preview_invoice C:\wamp\www\client_manager\application\views\admin\projects\preview_invoice.php 2
+ERROR - 2012-06-01 03:01:47 --> Severity: Notice  --> Undefined variable: preview_invoice C:\wamp\www\client_manager\application\views\admin\projects\preview_invoice.php 2
+ERROR - 2012-06-01 03:01:49 --> Severity: Notice  --> Undefined variable: preview_invoice C:\wamp\www\client_manager\application\views\admin\projects\preview_invoice.php 2
