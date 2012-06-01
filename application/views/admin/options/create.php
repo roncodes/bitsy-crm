@@ -5,7 +5,7 @@
 <?=form_open(current_url(), 'class="form-horizontal"')?>
 	<?=bootstrap_input('option_name', 'Option Name')?>
 	<?=bootstrap_input('option_value', 'Option Value')?>
-	<div class="form-actions">
+	<div class="controls">
 		<?=form_submit('submit', 'Create', 'class="btn btn-primary"'); ?>
 		<a href="<?=base_url('admin/options')?>" class="btn">Cancel</a>
 	</div>

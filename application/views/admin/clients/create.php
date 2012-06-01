@@ -9,6 +9,7 @@
 	<?=bootstrap_input('email', 'Email')?>
 	<?=bootstrap_input('company', 'Company')?>
 	<?=bootstrap_input('phone', 'Phone')?>
+	<?=bootstrap_textarea('address', 'Address')?>
 	<?=bootstrap_password('password', 'Password')?>
 	<?=bootstrap_password('password_confirm', 'Confirm Password')?>
 	<?=bootstrap_dropdown('group_id', 'Group', $groups)?>

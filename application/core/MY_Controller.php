@@ -59,11 +59,15 @@ class MY_Controller extends CI_Controller {
 
         if ($this->uri->segment(1) == 'admin')
         {
-	        $layout = ($this->layout !== null) ? $this->layout . '.php' : 'layouts/admin.php';
+			if(strstr($view, 'preview_invoice')){
+				$layout = 'layouts/ajax.php';
+			} else {
+				$layout = ($this->layout !== null) ? $this->layout . '.php' : 'layouts/admin.php';
+			}
         }
         else
         {
-	        $layout = ($this->layout !== null) ? $this->layout . '.php' : 'layouts/application.php';
+			$layout = ($this->layout !== null) ? $this->layout . '.php' : 'layouts/application.php';
         }
 
         if (is_admin())

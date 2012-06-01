@@ -46,6 +46,9 @@
 					<ul class="nav">
 						<li <?php if ($this->uri->segment(2) == '') echo 'class="active"'; ?>><a href="<?=base_url('admin')?>">Dashboard</a></li>
 						<li <?php if ($this->uri->segment(2) == 'clients') echo 'class="active"'; ?>><a href="<?=base_url('admin/clients')?>">Clients</a></li>
+						<li <?php if ($this->uri->segment(2) == 'projects') echo 'class="active"'; ?>><a href="<?=base_url('admin/projects')?>">Projects</a></li>
+						<li <?php if ($this->uri->segment(2) == 'invoices') echo 'class="active"'; ?>><a href="<?=base_url('admin/invoices')?>">Invoices</a></li>
+						<li <?php if ($this->uri->segment(2) == 'tickets') echo 'class="active"'; ?>><a href="<?=base_url('admin/tickets')?>">Tickets</a></li>
 						<li <?php if ($this->uri->segment(2) == 'options') echo 'class="active"'; ?>><a href="<?=base_url('admin/options')?>">Options</a></li>
 					</ul>
 					<ul class="nav pull-right">

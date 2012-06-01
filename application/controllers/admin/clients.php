@@ -30,6 +30,7 @@ class Clients extends MY_Controller {
 		$this->form_validation->set_rules('password', 'Password', 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]|trim|xss_clean');
 		$this->form_validation->set_rules('password_confirm', 'Password Confirmation', 'required|trim|xss_clean');
 		$this->form_validation->set_rules('group_id', 'Group', 'required|trim|xss_clean');
+		$this->form_validation->set_rules('address', 'Address', 'required|trim|xss_clean');
 		
 		if ($this->form_validation->run() == TRUE)
 		{
@@ -41,7 +42,8 @@ class Clients extends MY_Controller {
 				'first_name' => $this->input->post('first_name'),
 				'last_name' => $this->input->post('last_name'),
 				'company' => $this->input->post('company'),
-				'phone' => $this->input->post('phone')
+				'phone' => $this->input->post('phone'),
+				'address' => $this->input->post('address')
 			);
 		}
 		
@@ -49,7 +51,7 @@ class Clients extends MY_Controller {
 		{
 			// Creating the user was successful, redirect them back to the admin page
 			flashmsg('User created successfully.', 'success');
-			redirect('/admin/users');
+			redirect('/admin/clients');
 		}
 		
 		// Display the create user form
@@ -69,7 +71,7 @@ class Clients extends MY_Controller {
 		if (empty($id) || empty($user))
 		{
 			flashmsg('You must specify a user to edit.', 'error');
-			redirect('/admin/users');
+			redirect('/admin/clients');
 		}
 		
 		$this->form_validation->set_rules('username', 'Username', 'required|trim|xss_clean');
@@ -81,6 +83,7 @@ class Clients extends MY_Controller {
 		$this->form_validation->set_rules('password', 'Password', 'min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]|trim|xss_clean');
 		$this->form_validation->set_rules('password_confirm', 'Password Confirmation', 'trim|xss_clean');
 		$this->form_validation->set_rules('group_id', 'Group', 'required|trim|xss_clean');
+		$this->form_validation->set_rules('address', 'Address', 'required|trim|xss_clean');
 		
 		if ($this->form_validation->run() === TRUE)
 		{
@@ -96,7 +99,7 @@ class Clients extends MY_Controller {
 			if ($this->ion_auth->update_user($id, $data) === TRUE)
 			{
 				flashmsg('User edited successfully.', 'success');
-				redirect('/admin/users');
+				redirect('/admin/clients');
 			}
 			else
 			{
@@ -111,7 +114,7 @@ class Clients extends MY_Controller {
 			$groups[$group->id] = $group->description;
 		}
 		$this->data['groups'] = $groups;
-		$this->data['meta_title'] = 'Edit User';
+		$this->data['meta_title'] = 'Edit Client';
 	}
 
 	public function delete($id = NULL)
@@ -120,7 +123,7 @@ class Clients extends MY_Controller {
 		if (empty($id) || empty($user))
 		{
 			flashmsg('You must specify a user to edit.', 'error');
-			redirect('/admin/users');
+			redirect('/admin/clients');
 		}
 		
 		$this->form_validation->set_rules('confirm', 'confirmation', 'required');
@@ -145,11 +148,11 @@ class Clients extends MY_Controller {
 				
 				// Redirect them back to the admin page
 				flashmsg('User deleted successfully.', 'success');
-				redirect('/admin/users');
+				redirect('/admin/clients');
 			}
 			else
 			{
-				redirect('/admin/users');
+				redirect('/admin/clients');
 			}
 		}
 		
@@ -165,7 +168,7 @@ class Clients extends MY_Controller {
 		if (empty($id) || empty($user))
 		{
 			flashmsg('You must specify a user to deactivate.', 'error');
-			redirect('/admin/users');
+			redirect('/admin/clients');
 		}
 
 		$this->form_validation->set_rules('confirm', 'confirmation', 'required');
@@ -190,11 +193,11 @@ class Clients extends MY_Controller {
 				
 				// Redirect them back to the admin page
 				flashmsg('User deactivated successfully.', 'success');
-				redirect('/admin/users');
+				redirect('/admin/clients');
 			}
 			else
 			{
-				redirect('/admin/users');
+				redirect('/admin/clients');
 			}
 		}
 		

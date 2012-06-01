@@ -27,8 +27,8 @@
 			<td><?=ucfirst($user->group_description)?></td>
 			<td><?=($user->active) ? anchor(base_url('admin/clients/deactivate/'.$user->id), 'Active') : anchor(base_url('auth/activate/'.$user->id), 'Inactive'); ?></td>
 			<td>
-				<a href="<?=base_url('admin/clients/edit/'.$user->id)?>"><i class="icon-pencil"></i></a>
-				<a href="<?=base_url('admin/clients/delete/'.$user->id)?>"><i class="icon-trash"></i></a>
+				<a href="<?=base_url('admin/clients/edit/'.$user->id)?>" rel="tooltip" title="Edit user"><i class="icon-pencil"></i></a>
+				<a href="<?=base_url('admin/clients/delete/'.$user->id)?>" rel="tooltip" title="Delete user"><i class="icon-trash"></i></a>
 			</td>
 		</tr>
 	<?php endforeach; ?>

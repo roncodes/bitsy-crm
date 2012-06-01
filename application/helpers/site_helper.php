@@ -49,6 +49,21 @@ function bootstrap_input($name, $label = '', $default = NULL, $extra = 'class="s
 <?php
 }
 
+function bootstrap_textarea($name, $label = '', $default = NULL, $extra = 'class="span4"')
+{
+?>
+<div class="control-group <?php if (form_error($name)) echo 'error'; ?>">
+	<?php if ( ! empty($label)): ?>
+	<label class="control-label" for="<?=$name?>"><?=$label?></label>
+	<?php endif; ?>
+	<div class="controls">
+		<textarea <?=trim($extra)?> id="<?=$name?>" name="<?=$name?>" type="text" rows="3"><?=set_value($name, $default)?></textarea>
+		<?=form_error($name)?>
+	</div>
+</div>
+<?php
+}
+
 function bootstrap_password($name, $label = '', $default = NULL, $extra = 'class="span4"')
 {
 ?>
