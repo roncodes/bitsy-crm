@@ -50,6 +50,7 @@
 						<li <?php if ($this->uri->segment(2) == 'invoices') echo 'class="active"'; ?>><a href="<?=base_url('admin/invoices')?>">Invoices</a></li>
 						<li <?php if ($this->uri->segment(2) == 'tickets') echo 'class="active"'; ?>><a href="<?=base_url('admin/tickets')?>">Tickets</a></li>
 						<li <?php if ($this->uri->segment(2) == 'options') echo 'class="active"'; ?>><a href="<?=base_url('admin/options')?>">Options</a></li>
+						<li <?php if ($this->uri->segment(2) == 'payment-gateways') echo 'class="active"'; ?>><a href="<?=base_url('admin/payment-gateways')?>">Payment Gateways</a></li>
 					</ul>
 					<ul class="nav pull-right">
 						<li><a href="<?=base_url()?>">Frontend</a></li>

@@ -1,11 +1,15 @@
 <?php if(logged_in()){ ?>
 <div class="panel">
 	<div class="page-header">
+		<a href="<?=base_url('tickets/create')?>" class="btn btn-info pull-right">Submit Support Ticket</a>
 		<h1>Dashboard <small>welcome, here you can view and pay all your invoices, see your projects status and info</small></h1>
 	</div>
 	<div class="row-fluid">
 		<div class="span4">
 			<h3>Your Invoices</h3>
+			<?php foreach($invoices as $invoice){ ?>
+			<?=$invoice->invoice_id?><br>
+			<?php } ?>
 		</div>
 		<div class="span4">
 			<h3>Your Projects</h3>

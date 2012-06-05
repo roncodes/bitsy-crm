@@ -102,3 +102,45 @@ ERROR - 2012-06-05 02:29:56 --> Severity: Notice  --> Undefined index: project_i
 ERROR - 2012-06-05 02:29:56 --> Query error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
 ERROR - 2012-06-05 02:29:59 --> Severity: Notice  --> Undefined index: project_id C:\wamp\www\client_manager\application\controllers\ajax.php 28
 ERROR - 2012-06-05 02:29:59 --> Query error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+ERROR - 2012-06-05 02:45:56 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\frontend\index.php 11
+ERROR - 2012-06-05 02:45:56 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\frontend\index.php 11
+ERROR - 2012-06-05 02:45:56 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\frontend\index.php 11
+ERROR - 2012-06-05 02:45:56 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\frontend\index.php 11
+ERROR - 2012-06-05 02:45:56 --> Severity: Notice  --> Undefined property: stdClass::$invoice_id C:\wamp\www\client_manager\application\views\frontend\index.php 11
+ERROR - 2012-06-05 02:45:56 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\frontend\index.php 11
+ERROR - 2012-06-05 02:45:56 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\frontend\index.php 11
+ERROR - 2012-06-05 02:45:56 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\frontend\index.php 11
+ERROR - 2012-06-05 02:45:56 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\frontend\index.php 11
+ERROR - 2012-06-05 02:45:56 --> Severity: Notice  --> Undefined property: stdClass::$invoice_id C:\wamp\www\client_manager\application\views\frontend\index.php 11
+ERROR - 2012-06-05 02:45:56 --> Severity: Notice  --> Undefined property: stdClass::$invoice_id C:\wamp\www\client_manager\application\views\frontend\index.php 11
+ERROR - 2012-06-05 02:45:56 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\frontend\index.php 11
+ERROR - 2012-06-05 02:45:56 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\frontend\index.php 11
+ERROR - 2012-06-05 02:45:56 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\frontend\index.php 11
+ERROR - 2012-06-05 02:46:16 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\frontend\index.php 11
+ERROR - 2012-06-05 02:46:16 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\frontend\index.php 11
+ERROR - 2012-06-05 02:46:16 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\frontend\index.php 11
+ERROR - 2012-06-05 02:46:16 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\frontend\index.php 11
+ERROR - 2012-06-05 02:46:16 --> Severity: Notice  --> Undefined property: stdClass::$invoice_id C:\wamp\www\client_manager\application\views\frontend\index.php 11
+ERROR - 2012-06-05 02:46:16 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\frontend\index.php 11
+ERROR - 2012-06-05 02:46:16 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\frontend\index.php 11
+ERROR - 2012-06-05 02:46:16 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\frontend\index.php 11
+ERROR - 2012-06-05 02:46:16 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\frontend\index.php 11
+ERROR - 2012-06-05 02:46:16 --> Severity: Notice  --> Undefined property: stdClass::$invoice_id C:\wamp\www\client_manager\application\views\frontend\index.php 11
+ERROR - 2012-06-05 02:46:16 --> Severity: Notice  --> Undefined property: stdClass::$invoice_id C:\wamp\www\client_manager\application\views\frontend\index.php 11
+ERROR - 2012-06-05 02:46:16 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\frontend\index.php 11
+ERROR - 2012-06-05 02:46:16 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\frontend\index.php 11
+ERROR - 2012-06-05 02:46:16 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\frontend\index.php 11
+ERROR - 2012-06-05 02:46:35 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\frontend\index.php 12
+ERROR - 2012-06-05 02:46:35 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\frontend\index.php 12
+ERROR - 2012-06-05 02:46:35 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\frontend\index.php 12
+ERROR - 2012-06-05 02:46:35 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\frontend\index.php 12
+ERROR - 2012-06-05 02:46:35 --> Severity: Notice  --> Undefined property: stdClass::$invoice_id C:\wamp\www\client_manager\application\views\frontend\index.php 12
+ERROR - 2012-06-05 02:46:35 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\frontend\index.php 12
+ERROR - 2012-06-05 02:46:35 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\frontend\index.php 12
+ERROR - 2012-06-05 02:46:35 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\frontend\index.php 12
+ERROR - 2012-06-05 02:46:35 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\frontend\index.php 12
+ERROR - 2012-06-05 02:46:35 --> Severity: Notice  --> Undefined property: stdClass::$invoice_id C:\wamp\www\client_manager\application\views\frontend\index.php 12
+ERROR - 2012-06-05 02:46:35 --> Severity: Notice  --> Undefined property: stdClass::$invoice_id C:\wamp\www\client_manager\application\views\frontend\index.php 12
+ERROR - 2012-06-05 02:46:35 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\frontend\index.php 12
+ERROR - 2012-06-05 02:46:35 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\frontend\index.php 12
+ERROR - 2012-06-05 02:46:35 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\frontend\index.php 12

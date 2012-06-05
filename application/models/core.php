@@ -283,4 +283,15 @@ class Core extends CI_Model
 		return $total;
 	}
 	
+	function get_client_invoices($id, $client_invoices = array())
+	{
+		$invoices = $this->get_invoices();
+		foreach($invoices as $invoice){
+			if($invoice->client->id==$id){
+				$client_invoices[] = $invoice;
+			}
+		}
+		return $client_invoices;
+	}
+	
 }

@@ -11,6 +11,7 @@ class Frontend extends MY_Controller {
 	
 	public function index()
 	{
+		$this->data['invoices'] = $this->core->get_client_invoices(user_id());
 		$this->data['meta_title'] = 'Clients Manager';
 	}
 }
