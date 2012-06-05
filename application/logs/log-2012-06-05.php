@@ -98,3 +98,7 @@ ERROR - 2012-06-05 02:26:21 --> Severity: Notice  --> Undefined index: project_i
 ERROR - 2012-06-05 02:26:21 --> Query error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
 ERROR - 2012-06-05 02:27:23 --> Severity: Notice  --> Undefined index: project_id C:\wamp\www\client_manager\application\controllers\ajax.php 28
 ERROR - 2012-06-05 02:27:23 --> Query error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+ERROR - 2012-06-05 02:29:56 --> Severity: Notice  --> Undefined index: project_id C:\wamp\www\client_manager\application\controllers\ajax.php 28
+ERROR - 2012-06-05 02:29:56 --> Query error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+ERROR - 2012-06-05 02:29:59 --> Severity: Notice  --> Undefined index: project_id C:\wamp\www\client_manager\application\controllers\ajax.php 28
+ERROR - 2012-06-05 02:29:59 --> Query error: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1

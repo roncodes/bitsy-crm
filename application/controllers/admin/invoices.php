@@ -127,6 +127,19 @@ class Invoices extends MY_Controller {
 	
 	public function create()
 	{
+		if(isset($_POST['new_invoice'])){
+			$this->form_validation->set_rules('id', 'Invoice ID', 'required|trim|xss_clean|integer');
+			$this->form_validation->set_rules('description', 'Invoice Description', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('amount_paid', 'Amount Paid', 'trim|xss_clean|decimal');
+			if ($this->form_validation->run() == TRUE)
+			{
+				$gen = $this->core->generate_invoice($_POST);
+				if($gen){
+					flashmsg('Invoice created successfully.', 'success');
+					redirect('/admin/invoices');
+				}
+			}
+		}
 		$all_clients = $this->core->get_clients();
 		$clients = array('' => 'Select one');
 		foreach ($all_clients as $client)
