@@ -4,7 +4,7 @@
 	<a href="<?=base_url('admin/projects/groups')?>" class="btn btn-info pull-right" style="margin-right:20px;">Project Groups</a>
 	<h1>All Projects</h1>
 </div>
-<table class="table">
+<table class="table table-striped">
 	<thead>
 		<tr>
 			<th>Name</th>

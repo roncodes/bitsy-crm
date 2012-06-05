@@ -12,6 +12,11 @@ function dumpVars($array)
 	echo '</pre>';
 }
 
+function _money_format($value)
+{
+	return '$'.number_format(intval($value), 2, '.', '');
+}
+
 function flashmsg($string, $flag = 'info') {
 	$CI =& get_instance();
 	$CI->session->set_userdata('monolog', $string);

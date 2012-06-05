@@ -15,7 +15,7 @@ class Projects extends MY_Controller {
 	
 	public function index()
 	{
-		$this->data['projects'] = $this->_get_projects();
+		$this->data['projects'] = $this->core->get_projects();
 		$this->data['meta_title'] = 'All Projects';
 	}
 	
@@ -46,7 +46,7 @@ class Projects extends MY_Controller {
 				$clients[$user->id] = $user->first_name.' '.$user->last_name;
 			}
 		}
-		$all_groups = $this->_get_groups();
+		$all_groups = $this->core->get_groups();
 		$groups = array('' => 'Select one');
 		foreach ($all_groups as $group)
 		{
@@ -72,13 +72,13 @@ class Projects extends MY_Controller {
 				}
 			}
 		}
-		$this->data['groups'] = $this->_get_groups();
+		$this->data['groups'] = $this->core->get_groups();
 		$this->data['meta_title'] = 'Project Groups';
 	}
 	
 	public function update($id = NULL)
 	{
-		$project = $this->data['project'] = $this->_get_project($id);
+		$project = $this->data['project'] = $this->core->get_project($id);
 		if(isset($_POST['new_update'])){ // Quick and dirty - add a new update
 			$this->form_validation->set_rules('title', 'Update Title', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('description', 'Update Description', 'required|trim|xss_clean');
@@ -87,31 +87,47 @@ class Projects extends MY_Controller {
 				$query = $this->db->query("INSERT INTO project_updates (project_id, title, description) VALUES ('$project->id', '$_POST[title]', '$_POST[description]')");
 				if($query){
 					flashmsg('Project Update added successfully to '.$project->name.'.', 'success');
-					redirect('/admin/projects');
+					redirect('/admin/projects/update');
 				}
 			}
 		}
-		$this->data['updates'] = $this->_get_updates($id);
+		$this->data['updates'] = $this->core->get_updates($id);
 		$this->data['meta_title'] = 'Update Project';
 	}
 	
 	public function invoice($id = NULL)
 	{
-		$project = $this->data['project'] = $this->_get_project($id);
+		if(isset($_POST['new_invoice'])){
+			$this->form_validation->set_rules('id', 'Invoice ID', 'required|trim|xss_clean|integer');
+			$this->form_validation->set_rules('description', 'Invoice Description', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('amount_paid', 'Amount Paid', 'trim|xss_clean|decimal');
+			if ($this->form_validation->run() == TRUE)
+			{
+				$gen = $this->core->generate_invoice($_POST);
+				if($gen){
+					flashmsg('Invoice created successfully.', 'success');
+					redirect('/admin/projects');
+				}
+			}
+		}
+		$project = $this->data['project'] = $this->core->get_project($id);
 		$this->data['client'] = $this->ion_auth->get_user($project->client);
 		$this->data['meta_title'] = 'Generate Invoice for Project';
 	}
 	
 	public function preview_invoice()
 	{
-		$project = $this->data['project'] = $this->_get_project($_POST['project_id']);
+		$project = $this->data['project'] = $this->core->get_project($_POST['project_id']);
 		$this->data['client'] = $this->ion_auth->get_user($project->client);
 		$this->data['invoice_preview'] = $_POST;
+		$this->data['items'] = $this->core->parse_invoice_items_to_array($_POST);
+		$this->data['subtotal'] = $this->core->calculate_subtotal($this->core->parse_invoice_items_to_array($_POST));
+		$this->data['total'] = $this->_calculate_total($this->core->parse_invoice_items_to_array($_POST));
 	}
 	
 	public function edit($id = NULL)
 	{
-		$project = $this->data['project'] = $this->_get_project($id);
+		$project = $this->data['project'] = $this->core->get_project($id);
 		if(isset($_POST['edit_project'])){ // Quick and dirty - edit project
 			$this->form_validation->set_rules('project_name', 'Project Name', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('project_description', 'Project Description', 'required|trim|xss_clean');
@@ -136,7 +152,7 @@ class Projects extends MY_Controller {
 				$clients[$user->id] = $user->first_name.' '.$user->last_name;
 			}
 		}
-		$all_groups = $this->_get_groups();
+		$all_groups = $this->core->get_groups();
 		$groups = array('' => 'Select one');
 		foreach ($all_groups as $group)
 		{
@@ -150,10 +166,10 @@ class Projects extends MY_Controller {
 
 	public function delete($id = NULL)
 	{
-		$user = $this->data['project'] = $this->_get_project($id);
+		$user = $this->data['project'] = $this->core->get_project($id);
 		if (empty($id) || empty($user))
 		{
-			flashmsg('You must specify a project to edit.', 'error');
+			flashmsg('You must specify a project to delete.', 'error');
 			redirect('/admin/projects');
 		}
 		
@@ -166,7 +182,7 @@ class Projects extends MY_Controller {
 			if ($this->input->post('confirm') == 'yes')
 			{
 				// Do we have a valid request?
-				if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id'))
+				if ($this->core->valid_csrf_nonce() === FALSE || $id != $this->input->post('id'))
 				{
 					show_404();
 				}
@@ -174,7 +190,7 @@ class Projects extends MY_Controller {
 				// Do we have the right userlevel?
 				if ($this->ion_auth->logged_in() && $this->ion_auth->is_admin())
 				{
-					$this->_delete_project($id);
+					$this->core->delete_project($id);
 				}
 				
 				// Redirect them back to the admin page
@@ -188,85 +204,16 @@ class Projects extends MY_Controller {
 		}
 		
 		// Insert csrf check
-		$this->data['csrf'] = $this->_get_csrf_nonce();
-		$this->data['project'] = $this->_get_project($id);
+		$this->data['csrf'] = $this->core->get_csrf_nonce();
+		$this->data['project'] = $this->core->get_project($id);
 		$this->data['meta_title'] = 'Delete Project';
 	}
 	
-	function _get_groups($groups=array())
+	function _calculate_total($items)
 	{
-		$get_groups = $this->db->query("SELECT * FROM project_groups");
-		foreach($get_groups->result() as $row){
-			$groups[] = $row;
-		}
-		return $groups;
-	}
-	
-	function _get_projects($projects=array())
-	{
-		$get_projects = $this->db->query("SELECT * FROM projects");
-		foreach($get_projects->result() as $row){
-			$row->client = $this->_get_client_name($row->client);
-			$row->project_group = $this->_get_group_name($row->project_group);
-			$projects[] = $row;
-		}
-		return $projects;
-	}
-	
-	function _get_project($id)
-	{
-		$project = $this->db->query("SELECT * FROM projects WHERE id = $id");
-		return $project->row();
-	}
-	
-	function _get_updates($id, $updates=array())
-	{
-		$get_updates = $this->db->query("SELECT * FROM project_updates WHERE project_id = $id");
-		foreach($get_updates->result() as $row){
-			$updates[] = $row;
-		}
-		return $updates;
-	}
-	
-	function _delete_project($id)
-	{
-		return $this->db->query("DELETE FROM projects WHERE id = $id");
-	}
-	
-	function _get_client_name($id)
-	{
-		$user = $this->db->query("SELECT * FROM meta WHERE user_id = $id");
-		return $user->row()->first_name.' '.$user->row()->last_name;
-	}
-	
-	function _get_group_name($id)
-	{
-		$group = $this->db->query("SELECT * FROM project_groups WHERE id = $id");
-		return $group->row()->name;
-	}
-	
-	function _get_csrf_nonce()
-	{
-		$this->load->helper('string');
-		$key = random_string('alnum', 8);
-		$value = random_string('alnum', 20);
-		$this->session->set_flashdata('csrfkey', $key);
-		$this->session->set_flashdata('csrfvalue', $value);
-
-		return array($key => $value);
-	}
-
-	function _valid_csrf_nonce()
-	{
-		if ($this->input->post($this->session->flashdata('csrfkey')) !== FALSE &&
-			$this->input->post($this->session->flashdata('csrfkey')) == $this->session->flashdata('csrfvalue'))
-		{
-			return TRUE;
-		}
-		else
-		{
-			return FALSE;
-		}
+		$total['tax'] = $this->core->calculate_subtotal($items) * (floatval($this->data['settings']['tax_percent']) / 100);
+		$total['total'] = $total['tax'] + $this->core->calculate_subtotal($items);
+		return $total;
 	}
 	
 }

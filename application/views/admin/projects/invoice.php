@@ -7,7 +7,7 @@
 		<?=form_open(current_url(), array('class' => 'form-horizontal', 'id' => 'generate_invoice'))?>
 			<?=bootstrap_input('id', 'Invoice ID')?>
 			<?=bootstrap_input('description', 'Invoice Description', '...')?>
-			<?=bootstrap_input('amount_due', 'Amount Due')?>
+			<?=bootstrap_input('amount_paid', 'Amount Paid')?>
 			<div class="items"></div>
 			<input type="hidden" name="project_id" value="<?php echo $project->id; ?>">
 			<div class="controls">

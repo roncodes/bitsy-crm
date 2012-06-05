@@ -18,6 +18,7 @@ $(document).ready(function() {
 	$('a').tooltip();
 	
 	update_preview();
+	update_preview_external();
 });
 
 var add_invoice_item = function() {
@@ -36,7 +37,11 @@ var remove_item = function(id) {
 }
 
 var update_preview = function() {
-	$.post('../preview_invoice', $('#generate_invoice').serialize(), function(data){
+	$.post('/client_manager/admin/projects/preview_invoice', $('#generate_invoice').serialize(), function(data){
 		$('#invoice-preview').html(data);
 	});
+}
+
+var update_preview_external = function() {
+	
 }

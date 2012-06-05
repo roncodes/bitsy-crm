@@ -25,7 +25,7 @@
 				<tbody>
 					<tr>
 						<td>Invoice #</td>
-						<td>01</td>
+						<td><?=$invoice_preview['id']?></td>
 					</tr>
 					<tr>
 						<td>Date</td>
@@ -33,7 +33,7 @@
 					</tr>
 					<tr>
 						<td>Amount Due</td>
-						<td>$<?=$invoice_preview['amount_due']?></td>
+						<td><?=_money_format($total['total']-$invoice_preview['amount_paid'])?></td>
 					</tr>
 			  </tbody>
 			</table>
@@ -50,32 +50,40 @@
 			</tr>
 		</thead>
 		<tbody>
+			<?php setlocale(LC_MONETARY, 'en_US'); ?>
+			<?php for($i=0;$i<$items['count'];$i++){ ?>
 			<tr>
-				<td>...</td>
-				<td>...</td>
-				<td>...</td>
-				<td>...</td>
-				<td>...</td>
+				<td><?=$items['name'][$i]?></td>
+				<td><?=$items['description'][$i]?></td>
+				<td><?=_money_format($items['unit_cost'][$i])?></td>
+				<td><?=$items['quanity'][$i]?></td>
+				<td><?=_money_format($items['unit_cost'][$i]*$items['quanity'][$i])?></td>
 			</tr>
+			<?php } ?>
 			<tr>
 				<td colspan="3"></td>
 				<td>Subtotal</td>
-				<td>$300</td>
+				<td><?=_money_format($subtotal)?></td>
+			</tr>
+			<tr>
+				<td colspan="3"></td>
+				<td>Tax</td>
+				<td><?=_money_format($total['tax'])?></td>
 			</tr>
 			<tr>
 				<td colspan="3"></td>
 				<td>Total</td>
-				<td>$300</td>
+				<td><?=_money_format($total['total'])?></td>
 			</tr>
 			<tr>
 				<td colspan="3"></td>
 				<td>Amount Paid</td>
-				<td>$300</td>
+				<td><?=_money_format($invoice_preview['amount_paid'])?></td>
 			</tr>
 			<tr>
 				<td colspan="3"></td>
 				<td>Balance Due</td>
-				<td>$300</td>
+				<td><?=_money_format($total['total']-$invoice_preview['amount_paid'])?></td>
 			</tr>
 		</tbody>
 	</table>

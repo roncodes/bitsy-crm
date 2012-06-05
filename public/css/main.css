@@ -74,6 +74,17 @@ html {
 	margin-top:50px;
 	width:800px;
 }
+#invoice-view {
+	position:relative;
+	border:1px #000 solid;
+	min-height:500px;
+	background:#fff;
+	padding:20px;
+	overflow:auto;
+	width:700px;
+	margin-right:auto;
+	margin-left:auto;
+}
 #invoice {
 	position:relative;
 	border:1px #000 solid;

@@ -3,7 +3,7 @@
 	<a href="<?=base_url('admin/clients/create')?>" class="btn btn-primary pull-right">New Client</a>
 	<h1>All Clients</h1>
 </div>
-<table class="table">
+<table class="table table-striped">
 	<thead>
 		<tr>
 			<th>Name</th>
@@ -29,6 +29,7 @@
 			<td>
 				<a href="<?=base_url('admin/clients/edit/'.$user->id)?>" rel="tooltip" title="Edit user"><i class="icon-pencil"></i></a>
 				<a href="<?=base_url('admin/clients/delete/'.$user->id)?>" rel="tooltip" title="Delete user"><i class="icon-trash"></i></a>
+				<a href="<?=base_url('admin/clients/invoices/'.$user->id)?>" rel="tooltip" title="View this users invoices"><i class="icon-file"></i></a>
 			</td>
 		</tr>
 	<?php endforeach; ?>
