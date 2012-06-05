@@ -5,9 +5,9 @@
 			<h3>Invoice Details</h3>
 		</div>
 		<?=form_open(current_url(), array('class' => 'form-horizontal', 'id' => 'generate_invoice'))?>
+			<?=bootstrap_dropdown('client', 'Client', $clients, NULL, 'class="span4" onchange="get_clients_projects()"')?>
+			<?=bootstrap_dropdown('project_id', 'Project', array())?>
 			<?=bootstrap_input('id', 'Invoice ID')?>
-			<?=bootstrap_dropdown('client', 'Client', range(0,10))?>
-			<?=bootstrap_dropdown('project', 'Project', range(0,10))?>
 			<?=bootstrap_input('description', 'Invoice Description', '...')?>
 			<?=bootstrap_input('amount_paid', 'Amount Paid')?>
 			<div class="items"></div>
@@ -23,6 +23,6 @@
 			<a href="<?=base_url('admin/invoices')?>" class="btn pull-right">Back to Invoices</a>
 			<h3>Preview Invoice</h3>
 		</div>
-		<div id="invoice-preview"></div>
+		<div id="invoice-preview">Select a client to begin...</div>
 	</div>
 </div>

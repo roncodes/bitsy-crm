@@ -115,16 +115,6 @@ class Projects extends MY_Controller {
 		$this->data['meta_title'] = 'Generate Invoice for Project';
 	}
 	
-	public function preview_invoice()
-	{
-		$project = $this->data['project'] = $this->core->get_project($_POST['project_id']);
-		$this->data['client'] = $this->ion_auth->get_user($project->client);
-		$this->data['invoice_preview'] = $_POST;
-		$this->data['items'] = $this->core->parse_invoice_items_to_array($_POST);
-		$this->data['subtotal'] = $this->core->calculate_subtotal($this->core->parse_invoice_items_to_array($_POST));
-		$this->data['total'] = $this->_calculate_total($this->core->parse_invoice_items_to_array($_POST));
-	}
-	
 	public function edit($id = NULL)
 	{
 		$project = $this->data['project'] = $this->core->get_project($id);
@@ -207,13 +197,6 @@ class Projects extends MY_Controller {
 		$this->data['csrf'] = $this->core->get_csrf_nonce();
 		$this->data['project'] = $this->core->get_project($id);
 		$this->data['meta_title'] = 'Delete Project';
-	}
-	
-	function _calculate_total($items)
-	{
-		$total['tax'] = $this->core->calculate_subtotal($items) * (floatval($this->data['settings']['tax_percent']) / 100);
-		$total['total'] = $total['tax'] + $this->core->calculate_subtotal($items);
-		return $total;
 	}
 	
 }

@@ -59,12 +59,12 @@ class MY_Controller extends CI_Controller {
 
         if ($this->uri->segment(1) == 'admin')
         {
-			if(strstr($view, 'preview_invoice')||strstr($view, 'pdf_view')||strstr($view, 'download')){
-				$layout = 'layouts/ajax.php';
-			} else {
-				$layout = ($this->layout !== null) ? $this->layout . '.php' : 'layouts/admin.php';
-			}
+			$layout = ($this->layout !== null) ? $this->layout . '.php' : 'layouts/admin.php';
         }
+		else if ($this->uri->segment(1) == 'ajax')
+		{
+			$layout = ($this->layout !== null) ? $this->layout . '.php' : 'layouts/ajax.php';
+		}
         else
         {
 			$layout = ($this->layout !== null) ? $this->layout . '.php' : 'layouts/application.php';

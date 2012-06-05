@@ -54,6 +54,7 @@ class Invoices extends MY_Controller {
 			}
 		}
 		$this->data['invoice'] = $this->core->get_invoice($id);
+		$this->data['meta_title'] = 'Re-Open Invoice #'.$this->data['invoice']->invoice_id;
 	}
 	
 	public function close($id = NULL)
@@ -89,6 +90,7 @@ class Invoices extends MY_Controller {
 			}
 		}
 		$this->data['invoice'] = $this->core->get_invoice($id);
+		$this->data['meta_title'] = 'Close Invoice #'.$this->data['invoice']->invoice_id;
 	}
 	
 	public function edit($id = NULL)
@@ -108,32 +110,37 @@ class Invoices extends MY_Controller {
 		}
 		$this->data['invoice_id'] = $id;
 		$this->data['invoice'] = $this->core->get_invoice($id);
+		$this->data['meta_title'] = 'Edit Invoice #'.$this->data['invoice']->invoice_id;
 	}
 	
 	public function download($id = NULL)
 	{
 		$this->data['invoice'] = $this->core->get_invoice($id);
 		require_once(APPPATH."third_party/dompdf/dompdf_config.inc.php");
-		$html = $this->load->view('/admin/invoices/pdf_view', $this->data, true);
+		$html = $this->load->view('/ajax/pdf_view', $this->data, true);
 		$dompdf = new DOMPDF();
 		$dompdf->load_html($html);
 		$dompdf->render();
 		$dompdf->stream("invoice_id_".$this->data['invoice']->invoice_id.".pdf");
+		$this->data['meta_title'] = 'Download Invoice #'.$this->data['invoice']->invoice_id;
 	}
 	
 	public function create()
 	{
-		// do code
+		$all_clients = $this->core->get_clients();
+		$clients = array('' => 'Select one');
+		foreach ($all_clients as $client)
+		{
+			$clients[$client->id] = $client->first_name.' '.$client->last_name;
+		}
+		$this->data['clients'] = $clients;
+		$this->data['meta_title'] = 'Create new Invoice';
 	}
 	
 	public function view($id = NULL)
 	{
 		$this->data['invoice'] = $this->core->get_invoice($id);
-	}
-	
-	public function pdf_view($id = NULL)
-	{
-		$this->data['invoice'] = $this->core->get_invoice($id);
+		$this->data['meta_title'] = 'Viewing Invoice #'.$this->data['invoice']->invoice_id;
 	}
 	
 }

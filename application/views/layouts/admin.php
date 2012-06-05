@@ -12,7 +12,7 @@
 	<link href="<?=base_url('public/css/fancybox.css')?>" rel="stylesheet" media="all">
 	<link href="<?=base_url('public/css/main.css')?>" rel="stylesheet" media="all">
 	
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="<?=base_url('public/js/jquery.min.js')?>"></script>
 	<script src="<?=base_url('public/js/bootstrap.min.js')?>"></script>
 	<script src="<?=base_url('public/js/jquery.fancybox-1.3.1.pack.js')?>"></script>
 	<script src="<?=base_url('public/js/admin.js')?>"></script>

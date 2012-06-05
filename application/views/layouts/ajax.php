@@ -1,3 +1,4 @@
+<?php if($display_head){ ?>
 <!DOCTYPE HTML> 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:og="http://ogp.me/ns#"
@@ -21,4 +22,5 @@
 	<script type="text/javascript" src="<?=base_url()?>public/js/jquery-ui.js"></script>
 	<script type="text/javascript" src="<?=base_url()?>public/js/bootstrap.min.js"></script>
 </head>
+<?php } ?>
 <?php echo $yield; ?>

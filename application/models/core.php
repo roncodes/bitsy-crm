@@ -54,6 +54,7 @@ class Core extends CI_Model
 	{
 		$get_projects = $this->db->query("SELECT * FROM projects");
 		foreach($get_projects->result() as $row){
+			$row->client_obj = $this->ion_auth->get_user($row->client);
 			$row->client = $this->get_client_name($row->client);
 			$row->project_group = $this->get_group_name($row->project_group);
 			$projects[] = $row;
@@ -240,6 +241,17 @@ class Core extends CI_Model
 
 		return array($key => $value);
 	}
+	
+	function get_clients($clients = array())
+	{
+		$users = $this->ion_auth->get_users();
+		foreach($users as $user){
+			if($user->group_id==2){
+				$clients[] = $user;
+			}
+		}
+		return $clients;
+	}
 
 	function valid_csrf_nonce()
 	{
@@ -261,6 +273,14 @@ class Core extends CI_Model
 			$settings[$row->option_name] = $row->option_value;
 		}
 		return $settings;
+	}
+	
+	function calculate_total($items)
+	{
+		$settings = $this->get_settings();
+		$total['tax'] = $this->core->calculate_subtotal($items) * (floatval($settings['tax_percent']) / 100);
+		$total['total'] = $total['tax'] + $this->core->calculate_subtotal($items);
+		return $total;
 	}
 	
 }
