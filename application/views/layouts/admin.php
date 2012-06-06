@@ -10,7 +10,7 @@
 	
 	<link href="<?=base_url('public/css/bootstrap.min.css')?>" rel="stylesheet" media="all">
 	<link href="<?=base_url('public/css/fancybox.css')?>" rel="stylesheet" media="all">
-	<link href="<?=base_url('public/css/main.css')?>" rel="stylesheet" media="all">
+	<link href="<?=base_url('public/css/admin.css')?>" rel="stylesheet" media="all">
 	
 	<script src="<?=base_url('public/js/jquery.min.js')?>"></script>
 	<script src="<?=base_url('public/js/bootstrap.min.js')?>"></script>

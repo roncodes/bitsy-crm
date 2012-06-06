@@ -30,9 +30,13 @@
 				<div class="nav-collapse">
 					<ul class="nav">
 						<?php if(logged_in()){ ?>
-						<li class="active"><a href="<?=base_url()?>">Home</a></li>
+						<li <?php if ($this->uri->segment(2) == '') echo 'class="active"'; ?>><a href="<?=base_url()?>">Home</a></li>
+						<li <?php if ($this->uri->segment(2) == 'invoices') echo 'class="active"'; ?>><a href="<?=base_url('client/invoices')?>">Invoices</a></li>
+						<li <?php if ($this->uri->segment(2) == 'projects') echo 'class="active"'; ?>><a href="<?=base_url('client/projects')?>">Projects</a></li>
+						<li <?php if ($this->uri->segment(2) == 'tickets') echo 'class="active"'; ?>><a href="<?=base_url('client/tickets')?>">Tickets</a></li>
+						<li <?php if ($this->uri->segment(2) == 'profile') echo 'class="active"'; ?>><a href="<?=base_url('client/profile')?>">Your Profile</a></li>
 						<?php } else { ?>
-						<li class="active"><a href="<?=base_url()?>">Login</a></li>
+						<li <?php if ($this->uri->segment(2) == 'login') echo 'class="active"'; ?>><a href="<?=base_url('auth/login')?>">Login</a></li>
 						<?php } ?>
 					</ul>
 					<?php if(logged_in()){ ?>

@@ -4,7 +4,7 @@ body, html {
 	width:100%;
 }
 html {
-	overflow-y:hidden;
+	overflow-y:auto;
 	overflow-x:hidden;
 }
 .panel {
@@ -26,9 +26,25 @@ html {
 	-webkit-background-clip: padding-box;
 	-moz-background-clip: padding-box;
 	background-clip: padding-box;
-	min-height:500px;
-	max-height:600px;
+	min-height:450px;
 }
+.section-panel {
+	background:#fff;
+	padding:15px;
+	background-color: #A6D5FF;
+	border: 1px solid #999;
+	border: 1px solid rgba(0, 0, 0, 0.3);
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	-webkit-box-shadow: 0 3px 7px 
+	rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+	box-shadow: 0 3px 7px 
+	rgba(0, 0, 0, 0.3);
+	-webkit-background-clip: padding-box;
+	-moz-background-clip: padding-box;
+	background-clip: padding-box;}
 .admin-panel {
 	background:#fff;
 	margin-top:-110px;

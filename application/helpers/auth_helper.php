@@ -16,5 +16,9 @@ function user_id()
 {
 	$CI =& get_instance();
 	$user = $CI->ion_auth->get_user();
-	return $user->id;
+	if(isset($user->id)){
+		return $user->id;
+	} else {
+		return false;
+	}
 }

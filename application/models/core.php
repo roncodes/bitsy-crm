@@ -294,4 +294,24 @@ class Core extends CI_Model
 		return $client_invoices;
 	}
 	
+	function get_client_projects($id, $client_projects = array())
+	{
+		$projects = $this->get_projects();
+		foreach($projects as $project){
+			if($project->client_obj->id==$id){
+				$client_projects[] = $project;
+			}
+		}
+		return $client_projects;
+	}
+	
+	function get_client_tickets($id, $tickets = array())
+	{
+		$get_tickets = $this->db->query("SELECT * FROM tickets WHERE client = '$id'");
+		foreach($get_tickets->result() as $ticket){
+			$tickets[] = $ticket;
+		}
+		return $tickets;
+	}
+	
 }
