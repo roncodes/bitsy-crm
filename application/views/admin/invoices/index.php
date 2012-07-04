@@ -6,6 +6,7 @@
 	<table class="table table-striped">
 		<thead>
 			<tr>
+				<th>Index</th>
 				<th>Invoice ID</th>
 				<th>Client</th>
 				<th>Project</th>
@@ -16,8 +17,12 @@
 			</tr>
 		</thead>
 		<tbody>
-		<?php foreach ($invoices as $invoice): ?>
+		<?php for($i=$row_start;$i<($per_page+$row_start);$i++){ 
+			if(isset($invoices[$i])){
+				$invoice = $invoices[$i];
+		?>
 			<tr>
+				<td><?=$i+1?></td>
 				<td><?=$invoice->invoice_id?></td>
 				<td><?=$invoice->client->first_name.' '.$invoice->client->last_name?></td>
 				<td><?=$invoice->project->name?></td>
@@ -35,7 +40,8 @@
 					<?php } ?>
 				</td>
 			</tr>
-		<?php endforeach; ?>
+		<?php }} ?>
 		</tbody>
 	</table>
+	<?=$links?>
 </div>

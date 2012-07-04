@@ -113,6 +113,22 @@ class Core extends CI_Model
 		return $invoices;
 	}
 	
+	function get_user_invoices($id, $invoices=array())
+	{
+		$get_invoices = $this->db->query("SELECT * FROM invoices WHERE client_id = $id");
+		foreach($get_invoices->result() as $row){
+			$row->client = $this->ion_auth->get_user($row->client_id);
+			$row->items = json_decode($row->items);
+			$row->project = $this->core->get_project($row->project_id);
+			$row->amount_due = $this->get_amount_due($row);
+			$row->tax = $this->get_tax($row);
+			$row->total = $this->get_total($row);
+			$row->subtotal = $this->get_total($row);
+			$invoices[] = $row;
+		}
+		return $invoices;
+	}
+	
 	function get_amount_due($invoice)
 	{
 		$settings = $this->get_settings();
@@ -136,6 +152,14 @@ class Core extends CI_Model
 		return ($tax + $this->core->calculate_subtotal_from_object($items));
 	}
 	
+	function get_subtotal($invoice)
+	{
+		$settings = $this->get_settings();
+		$items = $invoice->items;
+		$tax = $this->core->calculate_subtotal_from_object($items) * (floatval($settings['tax_percent']) / 100);
+		return $this->core->calculate_subtotal_from_object($items);
+	}
+	
 	function get_invoice($id)
 	{
 		$get_invoices = $this->db->query("SELECT * FROM invoices WHERE id = $id");
@@ -145,7 +169,22 @@ class Core extends CI_Model
 			$row->project = $this->core->get_project($row->project_id);
 			$row->amount_due = $this->get_amount_due($row);
 			$row->tax = $this->get_tax($row);
-			$row->subtotal = $this->get_total($row);
+			$row->subtotal = $this->get_subtotal($row);
+			$invoice = $row;
+		}
+		return $invoice;
+	}
+	
+	function get_invoice_by_id($id)
+	{
+		$get_invoices = $this->db->query("SELECT * FROM invoices WHERE invoice_id = '$id'");
+		foreach($get_invoices->result() as $row){
+			$row->client = $this->ion_auth->get_user($row->client_id);
+			$row->items = json_decode($row->items);
+			$row->project = $this->core->get_project($row->project_id);
+			$row->amount_due = $this->get_amount_due($row);
+			$row->tax = $this->get_tax($row);
+			$row->subtotal = $this->get_subtotal($row);
 			$invoice = $row;
 		}
 		return $invoice;
@@ -307,11 +346,96 @@ class Core extends CI_Model
 	
 	function get_client_tickets($id, $tickets = array())
 	{
-		$get_tickets = $this->db->query("SELECT * FROM tickets WHERE client = '$id'");
+		$get_tickets = $this->db->query("SELECT * FROM tickets WHERE client = '$id' AND reply = 0");
 		foreach($get_tickets->result() as $ticket){
 			$tickets[] = $ticket;
 		}
 		return $tickets;
 	}
 	
+	function get_tickets($tickets = array())
+	{
+		$get_tickets = $this->db->query("SELECT * FROM tickets WHERE reply = 0");
+		foreach($get_tickets->result() as $ticket){
+			$tickets[] = $ticket;
+		}
+		return $tickets;
+	}
+	
+	function get_ticket($id)
+	{
+		return $this->db->query("SELECT * FROM tickets WHERE id = '$id'")->row();
+	}
+	
+	function get_ticket_replies($id, $replies = array())
+	{
+		$get_replies = $this->db->query("SELECT * FROM tickets WHERE code = '$id' AND reply = 1");
+		foreach($get_replies->result() as $reply){
+			$replies[] = $reply;
+		}
+		return $replies;
+	}
+	
+	function close_ticket($id)
+	{
+		return $this->db->query("UPDATE tickets SET status = 'Closed' WHERE code = '$id'");
+	}
+	
+	function open_ticket($id)
+	{
+		return $this->db->query("UPDATE tickets SET status = 'Open' WHERE code = '$id'");
+	}
+	
+	function get_gateways($gateways = array())
+	{
+		$get_gateways = $this->db->query("SELECT * FROM gateways");
+		foreach($get_gateways->result() as $row){
+			$gateways[$row->name] = $row;
+		}
+		return $gateways;
+	}
+	
+	function update_gateway($gateway, $data)
+	{
+		$insert_check = $this->db->query("SELECT * FROM gateways WHERE name = '$gateway'");
+		if($insert_check->num_rows()>0){
+			$query = $this->db->query("UPDATE gateways SET login = '$data[login]', password = '$data[password]', auth1 = '$data[auth1]', auth2 = '$data[auth2]', url = '$data[url]', active = '$data[active]' WHERE name = '$gateway'");
+		} else {
+			$query = $this->db->query("INSERT INTO gateways (name, login, password, auth1, auth2, url, active) VALUES ('$gateway', '$data[login]', '$data[password]', '$data[auth1]', '$data[auth2]', '$data[url]', '$data[active]')");
+		}
+		return $query;
+	}
+	
+	function make_paypal_payment($data)
+	{
+		$invoice = $this->get_invoice_by_id($data['item_number']);
+		$update_invoice = $this->db->query("UPDATE invoices SET amount_paid = '".(intval($data['payment_gross'])+intval($invoice->amount_paid))."' WHERE id = '$invoice->id'");
+		if($update_invoice){
+			$add_payment = $this->db->query("INSERT INTO payments (gateway, amount, invoice, transaction_id, client) VALUES ('paypal', '$data[payment_gross]', '$invoice->id', '$data[txn_id]', '".user_id()."')");
+		}
+		$invoice = $this->get_invoice($invoice->id);
+		if(intval($invoice->amount_due)>0){
+			$status = 'Unpaid';
+		} else {
+			$status = 'Paid';
+		}
+		$query = $this->db->query("UPDATE invoices SET status = '$status' WHERE id = '$invoice->id'");
+		return $add_payment;
+	}
+	
+	function make_stripe_payment($invoice, $result, $amount)
+	{
+		$update_invoice = $this->db->query("UPDATE invoices SET amount_paid = '".(intval(str_replace('$', '', $amount))+intval($invoice->amount_paid))."' WHERE id = '$invoice->id'");
+		if($update_invoice){
+			$add_payment = $this->db->query("INSERT INTO payments (gateway, amount, invoice, transaction_id, client) VALUES ('stripe', '".str_replace('$', '', $amount)."', '$invoice->id', '$result->id', '".user_id()."')");
+		}
+		$invoice = $this->get_invoice($invoice->id);
+		if(intval($invoice->amount_due)>0){
+			$status = 'Unpaid';
+		} else {
+			$status = 'Paid';
+		}
+		$query = $this->db->query("UPDATE invoices SET status = '$status' WHERE id = '$invoice->id'");
+		return $add_payment;
+	}
 }

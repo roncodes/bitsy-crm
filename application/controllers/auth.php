@@ -44,7 +44,11 @@ class Auth extends MY_Controller {
 			{
 				// Login was successful, so redirect them back to the home page
 				flashmsg($this->ion_auth->messages(), 'success');
-				redirect(base_url());
+				if(is_admin()){
+					redirect(base_url('admin'));
+				} else {
+					redirect(base_url());
+				}
 			}
 			else
 			{

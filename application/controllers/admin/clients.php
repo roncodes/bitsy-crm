@@ -19,6 +19,12 @@ class Clients extends MY_Controller {
 		$this->data['meta_title'] = 'All Clients';
 	}
 	
+	public function invoices($id = NULL)
+	{
+		$user = $this->data['user'] = $this->ion_auth->get_user($id);
+		$invoices = $this->data['invoices'] = $this->core->get_client_invoices($user->id);
+	}
+	
 	public function create()
 	{
 		$this->form_validation->set_rules('username', 'Username', 'required|trim|xss_clean');

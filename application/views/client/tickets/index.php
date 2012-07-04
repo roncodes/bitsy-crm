@@ -8,7 +8,7 @@
 				<thead>
 					<tr>
 						<th>Subject</th>
-						<th>Last Update</th>
+						<th>Date Opened</th>
 						<th>Status</th>
 					</tr>
 				</thead>
@@ -16,7 +16,7 @@
 				<?php foreach ($tickets as $ticket): ?>
 					<tr>
 						<td><?=$ticket->subject?></td>
-						<td><?=$ticket->last_update?></td>
+						<td><?=date("F j, Y", strtotime($ticket->date_opened))?></td>
 						<td><?=$ticket->status?></td>
 						<td>
 							<a href="<?=base_url('client/tickets/view/'.$ticket->id)?>" rel="tooltip" title="View this ticket"><i class="icon-eye-open"></i></a>

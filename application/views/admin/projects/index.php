@@ -7,6 +7,7 @@
 <table class="table table-striped">
 	<thead>
 		<tr>
+			<th>Index</th>
 			<th>Name</th>
 			<th>Assigned Client</th>
 			<th>Quote</th>
@@ -18,8 +19,12 @@
 		</tr>
 	</thead>
 	<tbody>
-	<?php foreach ($projects as $project): ?>
+	<?php for($i=$row_start;$i<($per_page+$row_start);$i++){ 
+		if(isset($projects[$i])){
+			$project = $projects[$i];
+	?>
 		<tr>
+			<td><?=$i+1?></td>
 			<td><?=$project->name?></td>
 			<td><?=$project->client?></td>
 			<td><?=$project->quote?></td>
@@ -34,6 +39,8 @@
 				<a href="<?=base_url('admin/projects/delete/'.$project->id)?>" rel="tooltip" title="Delete project"><i class="icon-trash"></i></a>
 			</td>
 		</tr>
-	<?php endforeach; ?>
+	<?php }} ?>
 	</tbody>
 </table>
+<?=$links?>
+</div>

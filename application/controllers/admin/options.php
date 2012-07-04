@@ -13,7 +13,29 @@ class Options extends MY_Controller {
 	
 	public function index()
 	{
-		$this->data['settings'] = $this->settings->get_settings();
+		$settings = $this->data['settings'] = $this->settings->get_settings();
+		// pagination
+		$this->load->library('pagination');
+		$this->data['base_pagination'] = $config['base_url'] = base_url('admin/options/page/');
+		$this->data['total_rows'] = $config['total_rows'] = count($settings);
+		$this->data['per_page'] = $config['per_page'] = 10; 
+		$this->data['row_start'] = intval($this->uri->segment(4));
+		$this->data['links'] = pagination_links($this->data);
+		// end pagination
+		$this->data['meta_title'] = 'Global Options';
+	}
+	
+	public function page()
+	{
+		$settings = $this->data['settings'] = $this->core->get_settings();
+		// pagination
+		$this->load->library('pagination');
+		$this->data['base_pagination'] = $config['base_url'] = base_url('admin/options/page/');
+		$this->data['total_rows'] = $config['total_rows'] = count($settings);
+		$this->data['per_page'] = $config['per_page'] = 10; 
+		$this->data['row_start'] = intval($this->uri->segment(4));
+		$this->data['links'] = pagination_links($this->data);
+		// end pagination
 		$this->data['meta_title'] = 'Global Options';
 	}
 	

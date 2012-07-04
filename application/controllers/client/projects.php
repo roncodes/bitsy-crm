@@ -6,6 +6,8 @@ class Projects extends MY_Controller {
 	{
 		parent::__construct();
 		
+		check_user_permissions();
+		
 		$this->form_validation->set_error_delimiters('<p class="help-block">', '</p>');
 		
 		$this->data['folder_name'] = 'client/projects/';
@@ -19,7 +21,12 @@ class Projects extends MY_Controller {
 	
 	public function comment($id = NULL)
 	{
+		$user = $this->data['user'] = $this->ion_auth->get_user(user_id());
 		$project = $this->data['project'] = $this->core->get_project($id);
+		if($project->client!=$user->id){
+			flashmsg('Project does not exist', 'error');
+			redirect('client/projects');
+		}
 		if(isset($_POST['new_update'])){ // Quick and dirty - add a new update
 			$this->form_validation->set_rules('title', 'Comment Title', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('description', 'Comment Description', 'required|trim|xss_clean');

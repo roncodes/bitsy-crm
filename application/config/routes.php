@@ -41,6 +41,7 @@
 $route['default_controller'] = 'frontend';
 $route['404_override'] = '';
 $route['admin'] = 'admin/dashboard';
+// $route['admin/projects/(:any)'] = 'admin/projects/$i';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

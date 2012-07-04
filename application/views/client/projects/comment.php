@@ -5,7 +5,7 @@
 			<h3>Project Comments</h3>
 		</div>
 		<?php foreach ($updates as $update): ?>
-			<div class="alert alert-info">
+			<div class="alert alert-<?php if(strstr($update->title, "Comment by Client:")){ ?>success<?php } else { ?>info<?php } ?>">
 				<div style="float:left;margin-right:10px;"><h1>#<?=$update->id?></h1></div>
 				<h4 class="alert-heading"><?=$update->title?></h4>
 				<?=$update->description?>

@@ -1,8 +1,8 @@
 <div class="admin-panel">
 <div class="page-header">
-	<h1>Delete Client</h1>
+	<h1>Delete User</h1>
 </div>
-<p>Are you sure you want to delete the client '<?=$user->username?>'?</p>
+<p>Are you sure you want to delete the user '<?=$user->username?>'?</p>
 <?=form_open(current_url())?>
 	<div class="control-group">
 		<div class="controls">
@@ -13,7 +13,7 @@
 	<?=form_hidden($csrf)?>
 	<?=form_hidden(array('id' => $user->id))?>
 	<div class="controls">
-		<?=form_submit('submit', 'Submit', 'class="btn btn-danger"')?>
+		<?=form_submit('submit', 'Submit', 'class="btn btn-primary"')?>
 		<a href="<?=base_url('admin/clients')?>" class="btn">Cancel</a>
 	</div>
 <?=form_close()?>

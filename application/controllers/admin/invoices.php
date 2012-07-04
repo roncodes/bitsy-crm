@@ -17,8 +17,30 @@ class Invoices extends MY_Controller {
 	
 	public function index()
 	{
-		$this->data['invoices'] = $this->core->get_invoices();
+		$invoices = $this->data['invoices'] = $this->core->get_invoices();
+		// pagination
+		$this->load->library('pagination');
+		$this->data['base_pagination'] = $config['base_url'] = base_url('admin/invoices/page/');
+		$this->data['total_rows'] = $config['total_rows'] = count($invoices);
+		$this->data['per_page'] = $config['per_page'] = 10; 
+		$this->data['row_start'] = intval($this->uri->segment(4));
+		$this->data['links'] = pagination_links($this->data);
+		// end pagination
 		$this->data['meta_title'] = 'All Invoices';
+	}
+	
+	public function page()
+	{
+		$invoices = $this->data['invoices'] = $this->core->get_invoices();
+		// pagination
+		$this->load->library('pagination');
+		$this->data['base_pagination'] = $config['base_url'] = base_url('admin/invoices/page/');
+		$this->data['total_rows'] = $config['total_rows'] = count($invoices);
+		$this->data['per_page'] = $config['per_page'] = 10; 
+		$this->data['row_start'] = intval($this->uri->segment(4));
+		$this->data['links'] = pagination_links($this->data);
+		// end pagination
+		$this->data['meta_title'] = 'All Projects';
 	}
 	
 	public function open($id = NULL)

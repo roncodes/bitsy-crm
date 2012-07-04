@@ -22,3 +22,13 @@ function user_id()
 		return false;
 	}
 }
+
+function check_user_permissions()
+{
+	if(logged_in()){
+		return true;
+	} else {
+		flashmsg('You must be logged in to access this', 'error');
+		redirect('auth/login');
+	}
+}

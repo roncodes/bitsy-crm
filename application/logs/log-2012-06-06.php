@@ -252,3 +252,4 @@ ERROR - 2012-06-06 03:03:09 --> Severity: Notice  --> Trying to get property of 
 ERROR - 2012-06-06 03:03:09 --> Severity: Notice  --> Trying to get property of non-object C:\wamp\www\client_manager\application\views\client\invoices\view.php 87
 ERROR - 2012-06-06 03:04:14 --> 404 Page Not Found --> invoices/payments
 ERROR - 2012-06-06 03:04:26 --> 404 Page Not Found --> client/profile
+ERROR - 2012-06-06 03:15:51 --> 404 Page Not Found --> client/profile

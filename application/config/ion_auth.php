@@ -54,7 +54,7 @@
 	 * Columns in your meta table,
 	 * id not required.
 	 **/
-	$config['columns']             = array('first_name', 'last_name', 'company', 'phone', 'address');
+	$config['columns']             = array('first_name', 'last_name', 'company', 'phone', 'address', 'timezone');
 	
 	/**
 	 * A database column which is used to

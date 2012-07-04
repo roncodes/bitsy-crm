@@ -15,7 +15,88 @@ class Tickets extends MY_Controller {
 	
 	public function index()
 	{
+		$this->data['tickets'] = $this->core->get_tickets();
 		$this->data['meta_title'] = 'All Tickets';
+	}
+	
+	public function view($id = NULL)
+	{
+		$user = $this->data['user'] = $this->ion_auth->get_user(user_id());
+		$ticket = $this->data['ticket'] = $this->core->get_ticket($id);
+		$replies = $this->data['replies'] = $this->core->get_ticket_replies($ticket->code);
+		if(isset($_POST['reply'])){ // Quick and dirty - reply
+			$this->form_validation->set_rules('reply', 'Reply', 'required|trim|xss_clean');
+			if ($this->form_validation->run() == TRUE)
+			{
+				if(count($replies)==0){
+					$subject = $ticket->subject;
+				} else {
+					$subject = $replies[count($replies)-1]->subject;
+				}
+				$query = $this->db->query("INSERT INTO tickets (code, subject, issue, client, project, status, reply) VALUES ('$ticket->code', 'RE: $subject', '<b>$user->username (admin) says:</b> ".mysql_real_escape_string($_POST['reply'])."', '$ticket->client', '$ticket->project', 'Open', 1)");
+				if($query){
+					flashmsg('New reply successfully added to ticket', 'success');
+					redirect('/admin/tickets/view/'.$id);
+				}
+			}
+		}
+	}
+	
+	public function close($id = NULL)
+	{
+		if (empty($id))
+		{
+			flashmsg('You must specify a ticket to close.', 'error');
+			redirect('/client/tickets');
+		}
+		$ticket = $this->data['ticket'] = $this->core->get_ticket($id);
+		$this->form_validation->set_rules('confirm', 'confirmation', 'required');
+		$this->form_validation->set_rules('id', 'ticket ID', 'required|is_natural');
+
+		if ($this->form_validation->run() === TRUE)
+		{
+			// Do we really want to deactivate?
+			if ($this->input->post('confirm') == 'yes')
+			{
+				$this->core->close_ticket($ticket->code);
+				// Redirect them back to the admin page
+				flashmsg('Ticket closed successfully.', 'success');
+				redirect('/admin/tickets');
+			}
+			else
+			{
+				redirect('/admin/tickets');
+			}
+		}
+		$this->data['meta_title'] = 'Close Ticket #'.$this->data['ticket']->code;
+	}
+	
+	public function open($id = NULL)
+	{
+		if (empty($id))
+		{
+			flashmsg('You must specify a ticket to re-open.', 'error');
+			redirect('/admin/tickets');
+		}
+		$ticket = $this->data['ticket'] = $this->core->get_ticket($id);
+		$this->form_validation->set_rules('confirm', 'confirmation', 'required');
+		$this->form_validation->set_rules('id', 'ticket ID', 'required|is_natural');
+
+		if ($this->form_validation->run() === TRUE)
+		{
+			// Do we really want to deactivate?
+			if ($this->input->post('confirm') == 'yes')
+			{
+				$this->core->open_ticket($ticket->code);
+				flashmsg('Ticket re-opened successfully.', 'success');
+				redirect('/admin/tickets');
+			}
+			else
+			{
+				redirect('/admin/tickets');
+			}
+		}
+		$this->data['meta_title'] = 'Re-Open Ticket #'.$this->data['ticket']->code;
 	}
 	
 }

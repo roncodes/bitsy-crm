@@ -1,14 +1,14 @@
 <?php if(logged_in()){ ?>
 <div class="panel">
 	<div class="page-header">
-		<a href="" class="btn btn-info pull-right">Submit Support Ticket</a>
+		<a href="client/tickets" class="btn btn-info pull-right">Submit Support Ticket</a>
 		<h1>Dashboard <small>welcome, here you can view and pay all your invoices, see your projects status and info</small></h1>
 	</div>
 	<div class="row-fluid">
 		<div class="span4 section-panel">
 			<h3>Your Recent Invoices</h3>
 			<?php foreach($invoices as $invoice){ ?>
-			<a href="<?=base_url('client/invoices/view/'.$invoice->invoice_id)?>" class="btn"><i class="icon-file"></i> #<?=$invoice->invoice_id?></a>
+			<a href="<?=base_url('client/invoices/view/'.$invoice->id)?>" class="btn"><i class="icon-file"></i> #<?=$invoice->invoice_id?></a>
 			<?php } ?>
 		</div>
 		<div class="span3 section-panel">
