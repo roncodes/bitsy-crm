@@ -138,3 +138,8 @@ html {
 .invoice-client {
 	padding:5px;
 }
+.invoice-btn {
+	width:90%;
+	display:block;
+	margin:5px;
+}

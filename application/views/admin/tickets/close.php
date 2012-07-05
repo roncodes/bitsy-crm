@@ -1,4 +1,4 @@
-<div class="panel">
+<div class="admin-panel">
 <div class="page-header">
 	<h1>Close Ticket</h1>
 </div>

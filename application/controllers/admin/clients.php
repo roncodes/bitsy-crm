@@ -15,7 +15,27 @@ class Clients extends MY_Controller {
 	
 	public function index()
 	{
-		$this->data['users'] = $this->ion_auth->get_users();
+		$users = $this->data['users'] = $this->ion_auth->get_users();
+		// pagination
+		$this->data['base_pagination'] = base_url('admin/clients/page/');
+		$this->data['total_rows'] = count($users);
+		$this->data['per_page'] = 10; 
+		$this->data['row_start'] = intval($this->uri->segment(4));
+		$this->data['links'] = pagination_links($this->data);
+		// end pagination
+		$this->data['meta_title'] = 'All Clients';
+	}
+	
+	public function page()
+	{
+		$users = $this->data['users'] = $this->ion_auth->get_users();
+		// pagination
+		$this->data['base_pagination'] = base_url('admin/clients/page/');
+		$this->data['total_rows'] = count($users);
+		$this->data['per_page'] = 10; 
+		$this->data['row_start'] = intval($this->uri->segment(4));
+		$this->data['links'] = pagination_links($this->data);
+		// end pagination
 		$this->data['meta_title'] = 'All Clients';
 	}
 	
@@ -29,14 +49,14 @@ class Clients extends MY_Controller {
 	{
 		$this->form_validation->set_rules('username', 'Username', 'required|trim|xss_clean');
 		$this->form_validation->set_rules('first_name', 'First Name', 'required|trim|xss_clean');
-		$this->form_validation->set_rules('last_name', 'Last Name', 'required|trim|xss_clean');
+		$this->form_validation->set_rules('last_name', 'Last Name', 'trim|xss_clean');
 		$this->form_validation->set_rules('email', 'Email Address', 'required|trim|valid_email');
 		$this->form_validation->set_rules('company', 'Company Name', 'trim|xss_clean');
 		$this->form_validation->set_rules('phone', 'Phone', 'trim|xss_clean');
 		$this->form_validation->set_rules('password', 'Password', 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]|trim|xss_clean');
 		$this->form_validation->set_rules('password_confirm', 'Password Confirmation', 'required|trim|xss_clean');
 		$this->form_validation->set_rules('group_id', 'Group', 'required|trim|xss_clean');
-		$this->form_validation->set_rules('address', 'Address', 'required|trim|xss_clean');
+		$this->form_validation->set_rules('address', 'Address', 'trim|xss_clean');
 		
 		if ($this->form_validation->run() == TRUE)
 		{

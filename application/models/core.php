@@ -201,7 +201,7 @@ class Core extends CI_Model
 	function update_invoice($post)
 	{
 		$invoice = $this->get_invoice($post['invoice_id']);
-		if(intval($this->get_new_amount_due($invoice, $post['amount_paid']))>0){
+		if(intval($this->get_new_amount_due($invoice, $post['amount_paid']))>=0){
 			$status = 'Unpaid';
 		} else {
 			$status = 'Paid';
@@ -333,6 +333,29 @@ class Core extends CI_Model
 		return $client_invoices;
 	}
 	
+	function get_recent_client_invoices($id, $client_invoices = array(), $num = 5)
+	{
+		$get_invoices = $this->db->query("SELECT * FROM invoices ORDER BY id DESC LIMIT $num");
+		foreach($get_invoices->result() as $invoice){
+			$invoice->client = $this->ion_auth->get_user($invoice->client_id);
+			if($invoice->client->id==$id){
+				$client_invoices[] = $invoice;
+			}
+		}
+		return $client_invoices;
+	}
+	
+	function get_recent_client_projects($id, $client_projects = array(), $num = 5)
+	{
+		$get_projects = $this->db->query("SELECT * FROM projects ORDER BY id DESC LIMIT $num");
+		foreach($get_projects->result() as $project){
+			if($project->client==$id){
+				$client_projects[] = $project;
+			}
+		}
+		return $client_projects;
+	}
+	
 	function get_client_projects($id, $client_projects = array())
 	{
 		$projects = $this->get_projects();
@@ -437,5 +460,14 @@ class Core extends CI_Model
 		}
 		$query = $this->db->query("UPDATE invoices SET status = '$status' WHERE id = '$invoice->id'");
 		return $add_payment;
+	}
+	
+	function get_settings_as_objs($settings = array())
+	{
+		$fetch = $this->db->query("SELECT * FROM settings");
+		foreach($fetch->result() as $setting){
+			$settings[] = $setting;
+		}
+		return $settings;
 	}
 }

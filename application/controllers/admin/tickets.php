@@ -15,7 +15,27 @@ class Tickets extends MY_Controller {
 	
 	public function index()
 	{
-		$this->data['tickets'] = $this->core->get_tickets();
+		$tickets = $this->data['tickets'] = $this->core->get_tickets();
+		// pagination
+		$this->data['base_pagination'] = base_url('admin/tickets/page/');
+		$this->data['total_rows'] = count($tickets);
+		$this->data['per_page'] = 10; 
+		$this->data['row_start'] = intval($this->uri->segment(4));
+		$this->data['links'] = pagination_links($this->data);
+		// end pagination
+		$this->data['meta_title'] = 'All Tickets';
+	}
+	
+	public function page()
+	{
+		$tickets = $this->data['tickets'] = $this->core->get_tickets();
+		// pagination
+		$this->data['base_pagination'] = base_url('admin/tickets/page/');
+		$this->data['total_rows'] = count($tickets);
+		$this->data['per_page'] = 10; 
+		$this->data['row_start'] = intval($this->uri->segment(4));
+		$this->data['links'] = pagination_links($this->data);
+		// end pagination
 		$this->data['meta_title'] = 'All Tickets';
 	}
 	

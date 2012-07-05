@@ -37,7 +37,7 @@
 	/**
 	 * Default group, use name
 	 */
-	$config['default_group']       = 'members';
+	$config['default_group']       = 'clients';
 	
 	/**
 	 * Default administrators group, use name

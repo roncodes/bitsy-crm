@@ -15,7 +15,27 @@ class Projects extends MY_Controller {
 	
 	public function index()
 	{
-		$this->data['projects'] = $this->core->get_client_projects(user_id());
+		$projects = $this->data['projects'] = $this->core->get_client_projects(user_id());
+		// pagination
+		$this->data['base_pagination'] = base_url('client/projects/page/');
+		$this->data['total_rows'] = count($projects);
+		$this->data['per_page'] = 10; 
+		$this->data['row_start'] = intval($this->uri->segment(4));
+		$this->data['links'] = pagination_links($this->data);
+		// end pagination
+		$this->data['meta_title'] = 'Your Projects';
+	}
+	
+	public function page()
+	{
+		$projects = $this->data['projects'] = $this->core->get_client_projects(user_id());
+		// pagination
+		$this->data['base_pagination'] = base_url('client/projects/page/');
+		$this->data['total_rows'] = count($projects);
+		$this->data['per_page'] = 10; 
+		$this->data['row_start'] = intval($this->uri->segment(4));
+		$this->data['links'] = pagination_links($this->data);
+		// end pagination
 		$this->data['meta_title'] = 'Your Projects';
 	}
 	

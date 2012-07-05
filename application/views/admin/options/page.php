@@ -3,7 +3,7 @@
 	<a href="<?=base_url('admin/options/create')?>" class="btn btn-primary pull-right">Create Option</a>
 	<h1>All Options</h1>
 </div>
-<?php if ( ! empty($options)): ?>
+<?php if ( ! empty($settings)): ?>
 <table class="table">
 	<thead>
 		<tr>

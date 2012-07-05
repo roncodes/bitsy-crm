@@ -17,10 +17,9 @@ class Projects extends MY_Controller {
 	{
 		$projects = $this->data['projects'] = $this->core->get_projects();
 		// pagination
-		$this->load->library('pagination');
-		$this->data['base_pagination'] = $config['base_url'] = base_url('admin/projects/page/');
-		$this->data['total_rows'] = $config['total_rows'] = count($projects);
-		$this->data['per_page'] = $config['per_page'] = 10; 
+		$this->data['base_pagination'] = base_url('admin/projects/page/');
+		$this->data['total_rows'] = count($projects);
+		$this->data['per_page'] = 10; 
 		$this->data['row_start'] = intval($this->uri->segment(4));
 		$this->data['links'] = pagination_links($this->data);
 		// end pagination
@@ -31,10 +30,9 @@ class Projects extends MY_Controller {
 	{
 		$projects = $this->data['projects'] = $this->core->get_projects();
 		// pagination
-		$this->load->library('pagination');
-		$this->data['base_pagination'] = $config['base_url'] = base_url('admin/projects/page/');
-		$this->data['total_rows'] = $config['total_rows'] = count($projects);
-		$this->data['per_page'] = $config['per_page'] = 10; 
+		$this->data['base_pagination'] = base_url('admin/projects/page/');
+		$this->data['total_rows'] = count($projects);
+		$this->data['per_page'] = 10; 
 		$this->data['row_start'] = intval($this->uri->segment(4));
 		$this->data['links'] = pagination_links($this->data);
 		// end pagination

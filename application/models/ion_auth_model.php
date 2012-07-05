@@ -511,7 +511,6 @@ class Ion_auth_model extends CI_Model
 		{
 		    $group_name = $this->config->item('default_group', 'ion_auth');
 		}
-
 		$group_id = $this->db->select('id')
 				     ->where('name', $group_name)
 				     ->get($this->tables['groups'])

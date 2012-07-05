@@ -15,7 +15,27 @@ class Invoices extends MY_Controller {
 	
 	public function index()
 	{
-		$this->data['invoices'] = $this->core->get_user_invoices(user_id());
+		$invoices = $this->data['invoices'] = $this->core->get_user_invoices(user_id());
+		// pagination
+		$this->data['base_pagination'] = base_url('client/invoices/page/');
+		$this->data['total_rows'] = count($invoices);
+		$this->data['per_page'] = 10; 
+		$this->data['row_start'] = intval($this->uri->segment(4));
+		$this->data['links'] = pagination_links($this->data);
+		// end pagination
+		$this->data['meta_title'] = 'Your Invoices';
+	}
+	
+	public function page()
+	{
+		$invoices = $this->data['invoices'] = $this->core->get_user_invoices(user_id());
+		// pagination
+		$this->data['base_pagination'] = base_url('client/invoices/page/');
+		$this->data['total_rows'] = count($invoices);
+		$this->data['per_page'] = 10; 
+		$this->data['row_start'] = intval($this->uri->segment(4));
+		$this->data['links'] = pagination_links($this->data);
+		// end pagination
 		$this->data['meta_title'] = 'Your Invoices';
 	}
 	

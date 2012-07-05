@@ -14,11 +14,11 @@ class Options extends MY_Controller {
 	public function index()
 	{
 		$settings = $this->data['settings'] = $this->settings->get_settings();
+		$options = $this->data['options'] = $this->core->get_settings_as_objs();
 		// pagination
-		$this->load->library('pagination');
-		$this->data['base_pagination'] = $config['base_url'] = base_url('admin/options/page/');
-		$this->data['total_rows'] = $config['total_rows'] = count($settings);
-		$this->data['per_page'] = $config['per_page'] = 10; 
+		$this->data['base_pagination'] = base_url('admin/options/page/');
+		$this->data['total_rows'] = count($options);
+		$this->data['per_page'] = 10; 
 		$this->data['row_start'] = intval($this->uri->segment(4));
 		$this->data['links'] = pagination_links($this->data);
 		// end pagination
@@ -27,12 +27,12 @@ class Options extends MY_Controller {
 	
 	public function page()
 	{
-		$settings = $this->data['settings'] = $this->core->get_settings();
+		$settings = $this->data['settings'] = $this->settings->get_settings();
+		$options = $this->data['options'] = $this->core->get_settings_as_objs();
 		// pagination
-		$this->load->library('pagination');
-		$this->data['base_pagination'] = $config['base_url'] = base_url('admin/options/page/');
-		$this->data['total_rows'] = $config['total_rows'] = count($settings);
-		$this->data['per_page'] = $config['per_page'] = 10; 
+		$this->data['base_pagination'] = base_url('admin/options/page/');
+		$this->data['total_rows'] = count($options);
+		$this->data['per_page'] = 10; 
 		$this->data['row_start'] = intval($this->uri->segment(4));
 		$this->data['links'] = pagination_links($this->data);
 		// end pagination

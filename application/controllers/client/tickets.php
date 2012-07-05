@@ -21,7 +21,7 @@ class Tickets extends MY_Controller {
 			$this->form_validation->set_rules('project', 'Project', 'required');
 			if ($this->form_validation->run() == TRUE)
 			{
-				$query = $this->db->query("INSERT INTO tickets (code, subject, issue, client, project, status) VALUES ('".$this->generate_ticket_code(5)."', '$_POST[subject]', '".mysql_real_escape_string($_POST['issue'])."', '".user_id()."', '$_POST[project]', 'Open')");
+				$query = $this->db->query("INSERT INTO tickets (code, subject, issue, client, project, status) VALUES ('".$this->generate_ticket_code(5)."', '".mysql_real_escape_string($_POST['subject'])."', '".mysql_real_escape_string($_POST['issue'])."', '".user_id()."', '$_POST[project]', 'Open')");
 				if($query){
 					$project = $this->core->get_project($_POST['project']);
 					flashmsg('New ticket created for project: '.$project->name.'.', 'success');
@@ -36,7 +36,48 @@ class Tickets extends MY_Controller {
 			$projects[$project->id] = $project->name;
 		}
 		$this->data['projects'] = $projects;
-		$this->data['tickets'] = $this->core->get_client_tickets(user_id());
+		$tickets = $this->data['tickets'] = $this->core->get_client_tickets(user_id());
+		// pagination
+		$this->data['base_pagination'] = base_url('client/tickets/page/');
+		$this->data['total_rows'] = count($tickets);
+		$this->data['per_page'] = 10; 
+		$this->data['row_start'] = intval($this->uri->segment(4));
+		$this->data['links'] = pagination_links($this->data);
+		// end pagination
+		$this->data['meta_title'] = 'Your Tickets';
+	}
+	
+	public function page()
+	{
+		if(isset($_POST['new_ticket'])){ // Quick and dirty - add a new ticket
+			$this->form_validation->set_rules('subject', 'Ticket Subject', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('issue', 'Issue Description', 'required|trim|xss_clean');
+			$this->form_validation->set_rules('project', 'Project', 'required');
+			if ($this->form_validation->run() == TRUE)
+			{
+				$query = $this->db->query("INSERT INTO tickets (code, subject, issue, client, project, status) VALUES ('".$this->generate_ticket_code(5)."', '".mysql_real_escape_string($_POST['subject'])."', '".mysql_real_escape_string($_POST['issue'])."', '".user_id()."', '$_POST[project]', 'Open')");
+				if($query){
+					$project = $this->core->get_project($_POST['project']);
+					flashmsg('New ticket created for project: '.$project->name.'.', 'success');
+					redirect('/client/tickets');
+				}
+			}
+		}
+		$all_projects = $this->core->get_projects();
+		$projects = array('' => 'Select one');
+		foreach ($all_projects as $project)
+		{
+			$projects[$project->id] = $project->name;
+		}
+		$this->data['projects'] = $projects;
+		$tickets = $this->data['tickets'] = $this->core->get_client_tickets(user_id());
+		// pagination
+		$this->data['base_pagination'] = base_url('client/tickets/page/');
+		$this->data['total_rows'] = count($tickets);
+		$this->data['per_page'] = 10; 
+		$this->data['row_start'] = intval($this->uri->segment(4));
+		$this->data['links'] = pagination_links($this->data);
+		// end pagination
 		$this->data['meta_title'] = 'Your Tickets';
 	}
 	
