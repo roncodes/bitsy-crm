@@ -15,6 +15,8 @@ class Tickets extends MY_Controller {
 	
 	public function index()
 	{
+		$user = $this->data['user'] = $this->ion_auth->get_user(user_id());
+		$settings = $this->data['settings'] = $this->settings->get_settings();
 		if(isset($_POST['new_ticket'])){ // Quick and dirty - add a new ticket
 			$this->form_validation->set_rules('subject', 'Ticket Subject', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('issue', 'Issue Description', 'required|trim|xss_clean');
@@ -22,8 +24,21 @@ class Tickets extends MY_Controller {
 			if ($this->form_validation->run() == TRUE)
 			{
 				$query = $this->db->query("INSERT INTO tickets (code, subject, issue, client, project, status) VALUES ('".$this->generate_ticket_code(5)."', '".mysql_real_escape_string($_POST['subject'])."', '".mysql_real_escape_string($_POST['issue'])."', '".user_id()."', '$_POST[project]', 'Open')");
+				$ticket_id = $this->db->insert_id();
 				if($query){
 					$project = $this->core->get_project($_POST['project']);
+					// $ticket = $this->data['ticket'] = $this->core->get_ticket($this->db->insert_id());
+					// Send Email
+					$email_data['username'] = $user->username;
+					$email_data['subject'] = $_POST['subject'];
+					$email_data['ticket_id'] = $ticket_id;
+					foreach($this->core->get_admin_emails() as $email){
+						$this->email->from($settings['company_email'], $settings['site_name']);
+						$this->email->to($email); 
+						$this->email->subject('New Support Ticket Opened');
+						$this->email->message($this->load->view('emails/new_ticket', $email_data, true));	
+						$this->email->send();
+					}
 					flashmsg('New ticket created for project: '.$project->name.'.', 'success');
 					redirect('/client/tickets');
 				}

@@ -481,4 +481,13 @@ class Core extends CI_Model
 		}
 		return array_sum($income);
 	}
+	
+	function get_admin_emails($emails = array())
+	{
+		$fetch = $this->db->query("SELECT * FROM users WHERE group_id = 1");
+		foreach($fetch->result() as $admin){
+			$emails[] = $admin->email;
+		}
+		return $emails;
+	}
 }
