@@ -470,4 +470,15 @@ class Core extends CI_Model
 		}
 		return $settings;
 	}
+	
+	function get_monthly_income($month = NULL, $income = array())
+	{
+		$invoices = $this->get_invoices();
+		foreach($invoices as $invoice){
+			if(date('m', strtotime($invoice->date))==$month){
+				$income[] = $invoice->amount_paid;
+			}
+		}
+		return array_sum($income);
+	}
 }

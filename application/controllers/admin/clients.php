@@ -109,11 +109,12 @@ class Clients extends MY_Controller {
 		$this->form_validation->set_rules('password', 'Password', 'min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]|trim|xss_clean');
 		$this->form_validation->set_rules('password_confirm', 'Password Confirmation', 'trim|xss_clean');
 		$this->form_validation->set_rules('group_id', 'Group', 'required|trim|xss_clean');
-		$this->form_validation->set_rules('address', 'Address', 'required|trim|xss_clean');
+		$this->form_validation->set_rules('address', 'Address', 'trim|xss_clean');
 		
 		if ($this->form_validation->run() === TRUE)
 		{
 			$data = $this->input->post();
+
 			unset($data['submit']);
 			
 			if (empty($data['password']))
@@ -121,7 +122,7 @@ class Clients extends MY_Controller {
 				unset($data['password']);
 			}
 			unset($data['password_confirm']);
-			
+		
 			if ($this->ion_auth->update_user($id, $data) === TRUE)
 			{
 				flashmsg('User edited successfully.', 'success');

@@ -16,6 +16,20 @@ class Profile extends MY_Controller {
 	public function index()
 	{
 		$user = $this->data['user'] = $this->ion_auth->get_user(user_id());
+		if(isset($_POST['update_password'])){
+			$this->form_validation->set_rules('old_password', 'Old Password', 'required');
+			$this->form_validation->set_rules('new_password', 'Password', 'min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[new_password_confirm]|trim|xss_clean');
+			$this->form_validation->set_rules('new_password_confirm', 'Password Confirmation', 'trim|xss_clean');
+			if ($this->form_validation->run() === TRUE){
+				if($this->ion_auth->change_password($user->email, $_POST['old_password'], $_POST['new_password'])){
+					flashmsg('Your password has been updated successfully.', 'success');
+					redirect('/client/profile');
+				} else {
+					flashmsg('Your password failed to be updated.', 'error');
+					redirect('/client/profile');
+				}
+			}
+		}
 		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
 		if ($this->form_validation->run() === TRUE)
 		{

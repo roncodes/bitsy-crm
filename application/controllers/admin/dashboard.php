@@ -13,6 +13,7 @@ class Dashboard extends MY_Controller {
 	
 	public function index()
 	{
+		$this->data['monthly_income'] = $this->core->get_monthly_income(date('m'));
 		$this->data['meta_title'] = 'Admin Dashboard';
 	}
 	
