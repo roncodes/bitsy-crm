@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 06, 2012 at 04:57 AM
--- Server version: 5.5.20
--- PHP Version: 5.3.10
+-- Generation Time: Jul 06, 2012 at 05:51 PM
+-- Server version: 5.5.23
+-- PHP Version: 5.2.17
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `test`
+-- Database: `ronaldr_cm`
 --
 
 -- --------------------------------------------------------
@@ -138,36 +138,7 @@ CREATE TABLE IF NOT EXISTS `projects` (
   `project_group` int(50) NOT NULL,
   `status` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=28 ;
-
---
--- Dumping data for table `projects`
---
-
-INSERT INTO `projects` (`id`, `name`, `description`, `client`, `quote`, `created`, `last_update`, `project_group`, `status`) VALUES
-(5, 'Website', 'A simple basic wordpress website', 2, '300.00', '2012-06-01 06:34:26', '2012-05-31 23:34:26', 1, 'Active'),
-(6, 'test1', 'test1', 2, '500.00', '2012-06-23 08:03:31', '2012-06-23 01:03:31', 1, 'Active'),
-(7, 'sucka', 'sucka', 2, '999.99', '2012-06-23 08:03:45', '2012-06-23 01:03:45', 1, 'Active'),
-(8, 'future', 'future', 2, '20.00', '2012-06-23 08:04:01', '2012-06-23 01:04:01', 1, 'Active'),
-(9, 'bless', 'bless', 2, '200.00', '2012-06-23 08:04:14', '2012-06-23 01:04:14', 1, 'Active'),
-(10, 'thousand', '1000', 2, '1000.00', '2012-06-23 08:04:39', '2012-06-23 01:04:39', 1, 'Active'),
-(11, 'test5', 'test5', 2, '200.00', '2012-06-23 08:05:46', '2012-06-23 01:05:46', 1, 'Active'),
-(12, 'test6', 'test6', 2, '99.99', '2012-06-23 08:07:11', '2012-06-23 01:07:11', 1, 'Active'),
-(13, 'blue', 'blue', 2, '30.00', '2012-06-23 08:07:28', '2012-06-23 01:07:28', 1, 'Active'),
-(14, 'red', 'red', 2, '999.99', '2012-06-23 08:07:40', '2012-06-23 01:07:40', 1, 'Active'),
-(15, 'green', 'green', 2, '2229.90', '2012-06-23 08:07:57', '2012-06-23 01:07:57', 1, 'Active'),
-(16, 'reddir', 'reddir', 2, '90050.00', '2012-06-23 08:08:13', '2012-06-23 01:08:13', 1, 'Active'),
-(17, 'fb clone', 'fb clone', 2, '600.00', '2012-06-23 08:08:47', '2012-06-23 01:08:47', 1, 'Active'),
-(18, 'builder', 'builder', 2, '230.00', '2012-06-23 08:09:03', '2012-06-23 01:09:03', 1, 'Active'),
-(19, 'gogogo', 'go', 2, '99.99', '2012-06-23 08:09:19', '2012-06-23 01:09:19', 1, 'Active'),
-(20, 'forty', 'forty', 2, '40.00', '2012-06-23 08:09:37', '2012-06-23 01:09:37', 1, 'Active'),
-(21, 'shade web', 'shade web awesome project', 10, '200.00', '2012-07-06 04:59:34', '2012-07-05 21:59:34', 1, 'Active'),
-(22, 'test', 'test5', 12, '300.00', '2012-07-06 11:33:23', '2012-07-06 04:33:23', 1, 'Active'),
-(23, 'testDNIDOFNIOGFDS', '1000', 12, '99.99', '2012-07-06 11:38:53', '2012-07-06 04:38:53', 1, 'Active'),
-(24, '50MILLION', 'dollars', 12, '0.00', '2012-07-06 11:40:25', '2012-07-06 04:40:25', 1, 'Active'),
-(25, 'HEXEDECIMAL', 'NORT', 12, '0.00', '2012-07-06 11:44:05', '2012-07-06 04:44:05', 1, 'Active'),
-(26, 'IONIO', 'JIOJIO', 12, '0.00', '2012-07-06 11:45:33', '2012-07-06 04:45:33', 1, 'Active'),
-(27, 'REDGREENBLUE', 'ndiosnfdiofdsniosdf', 12, '98.00', '2012-07-06 11:46:35', '2012-07-06 04:46:35', 1, 'Active');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -279,7 +250,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `group_id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `remember_code`, `created_on`, `last_login`, `active`) VALUES
-(1, 1, '127.0.0.1', 'administrator', '5ec7e430394b57eff9a94e962e6cbeb728eed865', '9462e8eee0', 'admin@admin.com', '', NULL, NULL, 1268889823, 1341546516, 1);
+(1, 1, '127.0.0.1', 'administrator', '5ec7e430394b57eff9a94e962e6cbeb728eed865', '9462e8eee0', 'admin@admin.com', '', NULL, NULL, 1268889823, 1341615005, 1);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

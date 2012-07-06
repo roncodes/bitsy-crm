@@ -10,7 +10,7 @@ class Invoices extends MY_Controller {
 		
 		$this->form_validation->set_error_delimiters('<p class="help-block">', '</p>');
 		$this->data['folder_name'] = 'client/invoices/';
-		$this->load->library('paypal_lib');
+		$this->load->library('Paypal_Lib');
 	}
 	
 	public function index()
