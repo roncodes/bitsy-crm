@@ -88,16 +88,18 @@ class Invoices extends MY_Controller {
 				$this->paypal_lib->add_field('item_name', $invoice->invoice_description);
 				$this->paypal_lib->add_field('item_number', $invoice->invoice_id);
 				$this->paypal_lib->add_field('amount', $_POST['amount']);
-				$this->paypal_lib->button('Confirm & Pay!');
+				$this->paypal_lib->button('Continue & Pay!');
 				$this->data['paypal_form'] = $this->paypal_lib->paypal_form('paypal_form');
 			} else if($_POST['gateway']=='stripe'){
 				require_once APPPATH.'libraries/Stripe.php';
-				$config['stripe_key_test_public'] = 'pk_OyHpP2uvEQIInEC6ghAvIg9dexjne';
-				$config['stripe_key_test_secret'] = 'xuRKxPH0GLEU6VwEeqI5L3VFiayQiiiA';
+				/* Testing config only, you can use your own if you want
+					$config['stripe_key_test_public'] = 'pk_OyHpP2uvEQIInEC6ghAvIg9dexjne';
+					$config['stripe_key_test_secret'] = 'xuRKxPH0GLEU6VwEeqI5L3VFiayQiiiA';
+				*/
 				$config['stripe_key_live_public'] = $gateways['stripe']->auth2;
 				$config['stripe_key_live_secret'] = $gateways['stripe']->auth1;
-				$config['stripe_verify_ssl'] = false;
-				$config['stripe_test_mode'] = TRUE;
+				$config['stripe_verify_ssl'] = true; // this needs to be ran in an ssl environment
+				$config['stripe_test_mode'] = false; // if you want to test the gateway, set true or false
 				$stripe = new Stripe($config);
 				if(isset($_POST['stripe_charge'])){
 					$charge = $stripe->charge_card((intval(str_replace('$', '', $_POST['amount']))*100), array('number' => $_POST['number'], 'exp_month' => $_POST['exp_month'], 'exp_year' => $_POST['exp_year'], 'cvc' => $_POST['cvc'], 'name' => $user->first_name.' '.$user->last_name), $invoice->invoice_description);
@@ -140,19 +142,21 @@ class Invoices extends MY_Controller {
 		$user = $this->data['user'] = $this->ion_auth->get_user(user_id());
 		$invoice = $this->data['invoice'] = $this->core->get_invoice_by_id($_REQUEST['item_number']);
 		if($gateway=='paypal'){
-			// The below code is for localhost test purposes since my local server can't get hit by paypal's IPN
-			// $this->core->make_paypal_payment($_REQUEST);
-			// $pay_data['user'] = $user->username;
-			// $pay_data['payment_amount'] = _money_format($_POST['payment_gross']);
-			// $pay_data['invoice_id'] = $invoice->invoice_id;
-			// // Email for paypal success
-			// foreach($this->core->get_admin_emails() as $email){
-				// $this->email->from($settings['company_email'], $settings['site_name']);
-				// $this->email->to($email); 
-				// $this->email->subject('New Payment!');
-				// $this->email->message($this->load->view('emails/new_payment', $pay_data, true));	
-				// $this->email->send();
-			// }
+			/*
+				// The below code is for localhost test purposes since my local server can't get hit by paypal's IPN
+				// $this->core->make_paypal_payment($_REQUEST);
+				$pay_data['user'] = $user->username;
+				$pay_data['payment_amount'] = _money_format($_POST['payment_gross']);
+				$pay_data['invoice_id'] = $invoice->invoice_id;
+				// Email for paypal success
+				foreach($this->core->get_admin_emails() as $email){
+					$this->email->from($settings['company_email'], $settings['site_name']);
+					$this->email->to($email); 
+					$this->email->subject('New Payment!');
+					$this->email->message($this->load->view('emails/new_payment', $pay_data, true));	
+					$this->email->send();
+				}
+			*/
 		}
 		$this->data['gateway'] = $gateway;
 		$this->data['meta_title'] = 'Successful invoice payment';
