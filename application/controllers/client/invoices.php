@@ -66,6 +66,7 @@ class Invoices extends MY_Controller {
 		$user = $this->data['user'] = $this->ion_auth->get_user(user_id());
 		$gateways = $this->data['gateways'] = $this->core->get_gateways();
 		$invoice = $this->data['invoice'] = $this->core->get_invoice($id);
+		$settings = $this->data['settings'] = $this->settings->get_settings();
 		if($invoice->client_id!=$user->id){
 			flashmsg('Invoice does not exist', 'error');
 			redirect('client/invoices');
@@ -103,6 +104,16 @@ class Invoices extends MY_Controller {
 					$result = json_decode($charge);
 					if(!$result->error){
 						$this->core->make_stripe_payment($invoice, $result, $_POST['amount']);
+						$pay_data['user'] = $user->username;
+						$pay_data['payment_amount'] = $_POST['amount'];
+						$pay_data['invoice_id'] = $invoice->invoice_id;
+						foreach($this->core->get_admin_emails() as $email){
+							$this->email->from($settings['company_email'], $settings['site_name']);
+							$this->email->to($email); 
+							$this->email->subject('New Payment!');
+							$this->email->message($this->load->view('emails/new_payment', $pay_data, true));	
+							$this->email->send();
+						}
 						flashmsg('Your payment of <b>'.$_POST['amount'].'</b> to invoice #'.$invoice->invoice_id.' has been successfully processed via Stripe', 'success');
 						redirect('client/invoices');
 					} else {
@@ -125,8 +136,23 @@ class Invoices extends MY_Controller {
 	
 	public function success($gateway = NULL)
 	{
+		$settings = $this->data['settings'] = $this->settings->get_settings();
+		$user = $this->data['user'] = $this->ion_auth->get_user(user_id());
+		$invoice = $this->data['invoice'] = $this->core->get_invoice_by_id($_REQUEST['item_number']);
 		if($gateway=='paypal'){
-			$this->core->make_paypal_payment($_REQUEST);
+			// The below code is for localhost test purposes since my local server can't get hit by paypal's IPN
+			// $this->core->make_paypal_payment($_REQUEST);
+			// $pay_data['user'] = $user->username;
+			// $pay_data['payment_amount'] = _money_format($_POST['payment_gross']);
+			// $pay_data['invoice_id'] = $invoice->invoice_id;
+			// // Email for paypal success
+			// foreach($this->core->get_admin_emails() as $email){
+				// $this->email->from($settings['company_email'], $settings['site_name']);
+				// $this->email->to($email); 
+				// $this->email->subject('New Payment!');
+				// $this->email->message($this->load->view('emails/new_payment', $pay_data, true));	
+				// $this->email->send();
+			// }
 		}
 		$this->data['gateway'] = $gateway;
 		$this->data['meta_title'] = 'Successful invoice payment';
@@ -134,8 +160,22 @@ class Invoices extends MY_Controller {
 	
 	public function ipn($gateway = NULL)
 	{
+		$settings = $this->data['settings'] = $this->settings->get_settings();
+		$user = $this->data['user'] = $this->ion_auth->get_user(user_id());
+		$invoice = $this->data['invoice'] = $this->core->get_invoice_by_id($_REQUEST['item_number']);
 		if($gateway=='paypal'){
 			$this->core->make_paypal_payment($_REQUEST);
+			$pay_data['user'] = $user->username;
+			$pay_data['payment_amount'] = _money_format($_POST['payment_gross']);
+			$pay_data['invoice_id'] = $invoice->invoice_id;
+			// Email for paypal success
+			foreach($this->core->get_admin_emails() as $email){
+				$this->email->from($settings['company_email'], $settings['site_name']);
+				$this->email->to($email); 
+				$this->email->subject('New Payment!');
+				$this->email->message($this->load->view('emails/new_payment', $pay_data, true));	
+				$this->email->send();
+			}
 		}
 	}
 	

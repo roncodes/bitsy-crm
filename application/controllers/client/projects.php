@@ -41,6 +41,7 @@ class Projects extends MY_Controller {
 	
 	public function comment($id = NULL)
 	{
+		$settings = $this->data['settings'] = $this->settings->get_settings();
 		$user = $this->data['user'] = $this->ion_auth->get_user(user_id());
 		$project = $this->data['project'] = $this->core->get_project($id);
 		if($project->client!=$user->id){
@@ -54,6 +55,16 @@ class Projects extends MY_Controller {
 			{
 				$query = $this->db->query("INSERT INTO project_updates (project_id, title, description) VALUES ('$project->id', 'Comment by Client: $_POST[title]', '$_POST[description]')");
 				if($query){
+					// Send Email
+					$email_data['user'] = $user->username;
+					$email_data['project_name'] = $project->name;
+					foreach($this->core->get_admin_emails() as $email){
+						$this->email->from($settings['company_email'], $settings['site_name']);
+						$this->email->to($email); 
+						$this->email->subject('New Comment on Project');
+						$this->email->message($this->load->view('emails/project_comment', $email_data, true));	
+						$this->email->send();
+					}
 					flashmsg('Project Comment added successfully to '.$project->name.'.', 'success');
 					redirect('/client/projects/comment/'.$id);
 				}

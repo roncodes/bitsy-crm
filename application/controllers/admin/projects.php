@@ -39,7 +39,7 @@ class Projects extends MY_Controller {
 		$this->data['meta_title'] = 'All Projects';
 	}
 	
-	public function create()
+	public function create($id = NULL)
 	{
 		if(isset($_POST['new_project'])){ // Quick and dirty - add a new project
 			$this->form_validation->set_rules('project_name', 'Project Name', 'required|trim|xss_clean');
@@ -50,8 +50,17 @@ class Projects extends MY_Controller {
 			$this->form_validation->set_rules('project_status', 'Project Status', 'required|trim|xss_clean');
 			if ($this->form_validation->run() == TRUE)
 			{
-				$query = $this->db->query("INSERT INTO projects (name, description, client, quote, created, project_group, status) VALUES ('$_POST[project_name]', '$_POST[project_description]', '$_POST[project_client]', '$_POST[project_quote]', '".date('Y-m-d H:i:s')."', '$_POST[project_group]', '$_POST[project_status]')");
+				$query = $this->db->query("INSERT INTO projects (name, description, client, quote, created, project_group, status) VALUES ('".mysql_real_escape_string($_POST['project_name'])."', '".mysql_real_escape_string($_POST['project_description'])."', '$_POST[project_client]', '$_POST[project_quote]', '".date('Y-m-d H:i:s')."', '$_POST[project_group]', '$_POST[project_status]')");
 				if($query){
+					$settings = $this->data['settings'] = $this->settings->get_settings();
+					$client = $this->data['client'] = $this->ion_auth->get_user($_POST['project_client']);
+					// Send Email
+					$email_data['project_name'] = $_POST['project_name'];
+					$this->email->from($settings['company_email'], $settings['site_name']);
+					$this->email->to($client->email); 
+					$this->email->subject('New Project Started!');
+					$this->email->message($this->load->view('emails/new_project', $email_data, true));	
+					$this->email->send();
 					flashmsg('New Project created successfully.', 'success');
 					redirect('/admin/projects');
 				}
@@ -98,7 +107,9 @@ class Projects extends MY_Controller {
 	
 	public function update($id = NULL)
 	{
+		$settings = $this->data['settings'] = $this->settings->get_settings();
 		$project = $this->data['project'] = $this->core->get_project($id);
+		$client = $this->data['client'] = $this->ion_auth->get_user($project->client);
 		if(isset($_POST['new_update'])){ // Quick and dirty - add a new update
 			$this->form_validation->set_rules('title', 'Update Title', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('description', 'Update Description', 'required|trim|xss_clean');
@@ -106,8 +117,15 @@ class Projects extends MY_Controller {
 			{
 				$query = $this->db->query("INSERT INTO project_updates (project_id, title, description) VALUES ('$project->id', '$_POST[title]', '$_POST[description]')");
 				if($query){
+					// Send Email
+					$email_data['project_title'] = $project->name;
+					$this->email->from($settings['company_email'], $settings['site_name']);
+					$this->email->to($client->email); 
+					$this->email->subject('New Update On Project');
+					$this->email->message($this->load->view('emails/project_update', $email_data, true));	
+					$this->email->send();
 					flashmsg('Project Update added successfully to '.$project->name.'.', 'success');
-					redirect('/admin/projects/update');
+					redirect('/admin/projects/update/'.$id);
 				}
 			}
 		}

@@ -41,9 +41,11 @@ class Tickets extends MY_Controller {
 	
 	public function view($id = NULL)
 	{
+		$settings = $this->data['settings'] = $this->settings->get_settings();
 		$user = $this->data['user'] = $this->ion_auth->get_user(user_id());
 		$ticket = $this->data['ticket'] = $this->core->get_ticket($id);
 		$replies = $this->data['replies'] = $this->core->get_ticket_replies($ticket->code);
+		$client = $this->data['client'] = $this->ion_auth->get_user($ticket->client);
 		if(isset($_POST['reply'])){ // Quick and dirty - reply
 			$this->form_validation->set_rules('reply', 'Reply', 'required|trim|xss_clean');
 			if ($this->form_validation->run() == TRUE)
@@ -55,6 +57,16 @@ class Tickets extends MY_Controller {
 				}
 				$query = $this->db->query("INSERT INTO tickets (code, subject, issue, client, project, status, reply) VALUES ('$ticket->code', 'RE: $subject', '<b>$user->username (admin) says:</b> ".mysql_real_escape_string($_POST['reply'])."', '$ticket->client', '$ticket->project', 'Open', 1)");
 				if($query){
+					// Send Email
+					$email_data['user'] = $user->username;
+					$email_data['reply'] = '<b>'.$user->username.' (admin) says:</b> '.$_POST['reply'];
+					$email_data['ticket_id'] = $ticket->ticket_id;
+					$email_data['ticket_subject'] = 'RE: '.$subject;
+					$this->email->from($settings['company_email'], $settings['site_name']);
+					$this->email->to($client->email); 
+					$this->email->subject('New Reply On Your Ticket');
+					$this->email->message($this->load->view('emails/ticket_reply', $email_data, true));	
+					$this->email->send();
 					flashmsg('New reply successfully added to ticket', 'success');
 					redirect('/admin/tickets/view/'.$id);
 				}

@@ -157,6 +157,17 @@ class Invoices extends MY_Controller {
 			{
 				$gen = $this->core->generate_invoice($_POST);
 				if($gen){
+					$project = $this->core->get_project($_POST['project_id']);
+					$settings = $this->data['settings'] = $this->settings->get_settings();
+					$client = $this->ion_auth->get_user($project->client);
+					// Send Email
+					$email_data['project_name'] = $project->name;
+					$email_data['invoice_amount'] = $this->core->calculate_total($this->core->parse_invoice_items_to_array($_POST));
+					$this->email->from($settings['company_email'], $settings['site_name']);
+					$this->email->to($client->email); 
+					$this->email->subject('New Invoice Billed To You');
+					$this->email->message($this->load->view('emails/new_invoice', $email_data, true));	
+					$this->email->send();
 					flashmsg('Invoice created successfully.', 'success');
 					redirect('/admin/invoices');
 				}

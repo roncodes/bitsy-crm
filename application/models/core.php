@@ -473,10 +473,10 @@ class Core extends CI_Model
 	
 	function get_monthly_income($month = NULL, $income = array())
 	{
-		$invoices = $this->get_invoices();
-		foreach($invoices as $invoice){
-			if(date('m', strtotime($invoice->date))==$month){
-				$income[] = $invoice->amount_paid;
+		$fetch = $this->db->query("SELECT * FROM payments");
+		foreach($fetch->result() as $payment){
+			if(date('m', strtotime($payment->date))==$month){
+				$income[] = $payment->amount;
 			}
 		}
 		return array_sum($income);

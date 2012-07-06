@@ -100,6 +100,7 @@ class Tickets extends MY_Controller {
 	{
 		$user = $this->data['user'] = $this->ion_auth->get_user(user_id());
 		$ticket = $this->data['ticket'] = $this->core->get_ticket($id);
+		$settings = $this->data['settings'] = $this->settings->get_settings();
 		if($ticket->client!=$user->id){
 			flashmsg('Ticket does not exist', 'error');
 			redirect('client/tickets');
@@ -116,6 +117,18 @@ class Tickets extends MY_Controller {
 				}
 				$query = $this->db->query("INSERT INTO tickets (code, subject, issue, client, project, status, reply) VALUES ('$ticket->code', 'RE: $subject', '<b>$user->username says:</b> ".mysql_real_escape_string($_POST['reply'])."', '$ticket->client', '$ticket->project', 'Open', 1)");
 				if($query){
+					// Send Email
+					$email_data['user'] = $user->username;
+					$email_data['ticket_subject'] = 'RE: '.$subject;
+					$email_data['reply'] = '<b>'.$user->username.' says:</b> '.$_POST['reply'];
+					$email_data['ticket_id'] = $ticket->code;
+					foreach($this->core->get_admin_emails() as $email){
+						$this->email->from($settings['company_email'], $settings['site_name']);
+						$this->email->to($email); 
+						$this->email->subject('New Ticket Reply');
+						$this->email->message($this->load->view('emails/ticket_reply', $email_data, true));	
+						$this->email->send();
+					}
 					flashmsg('New reply successfully added to ticket', 'success');
 					redirect('/client/tickets/view/'.$id);
 				}

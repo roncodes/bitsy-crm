@@ -47,6 +47,7 @@ class Clients extends MY_Controller {
 	
 	public function create()
 	{
+		$settings = $this->data['settings'] = $this->settings->get_settings();
 		$this->form_validation->set_rules('username', 'Username', 'required|trim|xss_clean');
 		$this->form_validation->set_rules('first_name', 'First Name', 'required|trim|xss_clean');
 		$this->form_validation->set_rules('last_name', 'Last Name', 'trim|xss_clean');
@@ -75,6 +76,15 @@ class Clients extends MY_Controller {
 		
 		if ($this->form_validation->run() == TRUE && $this->ion_auth->register($username, $password, $email, $additional_data))
 		{
+			// Send Email
+			$email_data['system_name'] = SYSTEM_NAME;
+			$email_data['login'] = $email;
+			$email_data['password'] = $password;
+			$this->email->from($settings['company_email'], $settings['site_name']);
+			$this->email->to($email); 
+			$this->email->subject('New Account Created!');
+			$this->email->message($this->load->view('emails/new_account', $email_data, true));	
+			$this->email->send();
 			// Creating the user was successful, redirect them back to the admin page
 			flashmsg('User created successfully.', 'success');
 			redirect('/admin/clients');
