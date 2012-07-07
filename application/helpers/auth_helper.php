@@ -32,3 +32,11 @@ function check_user_permissions()
 		redirect('auth/login');
 	}
 }
+
+function admin_auth_check()
+{
+	if(!is_admin()){
+		flashmsg('You must be admin to access this', 'error');
+		redirect('auth/login');
+	}
+}
