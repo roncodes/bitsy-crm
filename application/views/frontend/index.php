@@ -27,7 +27,6 @@
 		</div>
 	</div>
 </div>
-<div class="foot">&copy <?php echo date('Y'); ?> Ronald A. Richardson. All Rights Reserved.</div>
 <?php } else { ?>
 <div class="modal">
 	<div class="modal-header">
