@@ -420,6 +420,12 @@ class Core extends CI_Model
 	
 	function update_gateway($gateway, $data)
 	{
+		$gateway_elements = array('login', 'password', 'auth1', 'auth2', 'url', 'active');
+		foreach($gateway_elements as $element){
+			if(!isset($data[$element])){
+				$data[$element] = '';
+			}
+		}
 		$insert_check = $this->db->query("SELECT * FROM gateways WHERE name = '$gateway'");
 		if($insert_check->num_rows()>0){
 			$query = $this->db->query("UPDATE gateways SET login = '$data[login]', password = '$data[password]', auth1 = '$data[auth1]', auth2 = '$data[auth2]', url = '$data[url]', active = '$data[active]' WHERE name = '$gateway'");
