@@ -65,6 +65,10 @@ class MY_Controller extends CI_Controller {
 		{
 			$layout = ($this->layout !== null) ? $this->layout . '.php' : 'layouts/ajax.php';
 		}
+		else if ($this->uri->segment(1) == 'cron')
+		{
+			$layout = ($this->layout !== null) ? $this->layout . '.php' : 'layouts/ajax.php';
+		}
         else
         {
 			$layout = ($this->layout !== null) ? $this->layout . '.php' : 'layouts/application.php';

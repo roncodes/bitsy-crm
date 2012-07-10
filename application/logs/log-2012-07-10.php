@@ -32,3 +32,4 @@ ERROR - 2012-07-10 01:22:00 --> Severity: Notice  --> Undefined property: stdCla
 ERROR - 2012-07-10 01:22:00 --> Severity: Notice  --> Undefined offset: 1 C:\wamp\www\bitsy-crm\application\views\client\invoices\page.php 27
 ERROR - 2012-07-10 01:22:00 --> Severity: Notice  --> Undefined property: stdClass::$recur_by C:\wamp\www\bitsy-crm\application\views\client\invoices\page.php 27
 ERROR - 2012-07-10 01:22:00 --> Severity: Notice  --> Undefined offset: 1 C:\wamp\www\bitsy-crm\application\views\client\invoices\page.php 27
+ERROR - 2012-07-10 01:34:14 --> 404 Page Not Found --> 404
