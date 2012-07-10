@@ -238,6 +238,9 @@ class Core extends CI_Model
 				} else if(strstr($item, 'unit_cost')){
 					$items['unit_cost'][] = $val;
 				} else if(strstr($item, 'quanity')){
+					if(intval($val)==0){
+						$val = 1;
+					}
 					$items['quanity'][] = $val;
 					$items['count'] = $items['count']+1;
 				}
