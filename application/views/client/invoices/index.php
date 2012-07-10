@@ -7,6 +7,8 @@
 			<tr>
 				<th>Invoice ID</th>
 				<th>Project</th>
+				<th>Due Date</th>
+				<th>Recurring</th>
 				<th>Amount Paid</th>
 				<th>Amount Due</th>
 				<th>Status</th>
@@ -21,6 +23,8 @@
 			<tr>
 				<td><?=$invoice->invoice_id?></td>
 				<td><?=$invoice->project->name?></td>
+				<td><?=date('F j, Y, g:i a', strtotime($invoice->date)).' '.past_due($invoice->date)?></td>
+				<td><?php if($invoice->recurring){ list($recur,$by) = explode('|', $invoice->recur_every); echo 'Every '.$recur.' '.$by; } else { echo "Non recurring"; } ?></td>
 				<td><?=_money_format($invoice->amount_paid)?></td>
 				<td><?=_money_format($invoice->amount_due)?></td>
 				<td><?=$invoice->status?></td>

@@ -1,5 +1,15 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+function past_due($date)
+{
+	$diff = time() - strtotime($date);
+    if(round($diff / 86400)>3){
+		return "<font color='#ff0000'>(".round($diff / 86400)." days overdue)</font>"; 
+	} else {
+		return false;
+	}
+}
+
 function date_flip_set($date) // flips MM-DD-YYYY to YYYY-MM-DD
 {
 	list($mm, $dd, $yyyy) = explode('-', $date);
