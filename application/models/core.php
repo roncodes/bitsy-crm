@@ -37,8 +37,8 @@ class Core extends CI_Model
 	
 	function get_client_name($id)
 	{
-		$user = $this->db->query("SELECT * FROM meta WHERE user_id = $id");
-		return $user->row()->first_name.' '.$user->row()->last_name;
+		$user = $this->db->query("SELECT * FROM meta WHERE user_id = $id")->row();
+		return $user->first_name.' '.$user->last_name;
 	}
 	
 	function get_groups($groups=array())
