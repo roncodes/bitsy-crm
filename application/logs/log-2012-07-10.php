@@ -33,3 +33,5 @@ ERROR - 2012-07-10 01:22:00 --> Severity: Notice  --> Undefined offset: 1 C:\wam
 ERROR - 2012-07-10 01:22:00 --> Severity: Notice  --> Undefined property: stdClass::$recur_by C:\wamp\www\bitsy-crm\application\views\client\invoices\page.php 27
 ERROR - 2012-07-10 01:22:00 --> Severity: Notice  --> Undefined offset: 1 C:\wamp\www\bitsy-crm\application\views\client\invoices\page.php 27
 ERROR - 2012-07-10 01:34:14 --> 404 Page Not Found --> 404
+ERROR - 2012-07-10 02:03:37 --> 404 Page Not Found --> 404
+ERROR - 2012-07-10 02:04:42 --> Severity: Warning  --> file_put_contents(/tmp/crontab.txt) [<a href='function.file-put-contents'>function.file-put-contents</a>]: failed to open stream: No such file or directory C:\wamp\www\bitsy-crm\application\controllers\admin\dashboard.php 18

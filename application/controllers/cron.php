@@ -13,7 +13,16 @@ class Cron extends MY_Controller {
 	
 	function generate_recurring_invoices()
 	{
-		// do code
+		$invoices = $this->core->get_invoices();
+		foreach($invoices as $invoice){
+			if($invoice->recurring){
+				if($invoice->recur_parent){
+					if(date('Yd', strtotime($invoice->date))==date('Yd')){ 
+						$this->core->generate_invoice_cron($invoice);
+					}
+				}
+			}
+		}
 	}
 	
 }

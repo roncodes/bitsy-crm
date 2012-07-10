@@ -68,17 +68,31 @@ class Core extends CI_Model
 		$client = $this->ion_auth->get_user($project->client);
 		$items = mysql_real_escape_string(json_encode($this->parse_invoice_items_to_array($post)));
 		if(!isset($post['custom_date'])){
-			$query = $this->db->query("INSERT INTO invoices (invoice_id, client_id, project_id, items, amount_paid, invoice_description, recurring, recur_every) VALUES ('$post[id]', '$client->id', '$post[project_id]', '$items', '$post[amount_paid]', '".mysql_real_escape_string($post['description'])."', '".intval($post['recurring'])."', '".$post['recur_length']."|".$post['recur_by']."')");
+			$query = $this->db->query("INSERT INTO invoices (invoice_id, client_id, project_id, items, amount_paid, invoice_description, recurring, recur_every, recur_parent) VALUES ('$post[id]', '$client->id', '$post[project_id]', '$items', '$post[amount_paid]', '".mysql_real_escape_string($post['description'])."', '".intval($post['recurring'])."', '".$post['recur_length']."|".$post['recur_by']."', '1')");
 		} else {
 			/* Convert user input date to unix timestamp */
 			list($month, $day, $year) = split('/', $post['date']);
 			$cdate = mktime(0, 0, 0, $month, $day, $year);
-			$query = $this->db->query("INSERT INTO invoices (invoice_id, client_id, project_id, items, amount_paid, date, invoice_description, recurring, recur_every) VALUES ('$post[id]', '$client->id', '$post[project_id]', '$items', '$post[amount_paid]', FROM_UNIXTIME($cdate), '".mysql_real_escape_string($post['description'])."', '".intval($post['recurring'])."', '".$post['recur_length']."|".$post['recur_by']."')");
+			$query = $this->db->query("INSERT INTO invoices (invoice_id, client_id, project_id, items, amount_paid, date, invoice_description, recurring, recur_every, recur_parent) VALUES ('$post[id]', '$client->id', '$post[project_id]', '$items', '$post[amount_paid]', FROM_UNIXTIME($cdate), '".mysql_real_escape_string($post['description'])."', '".intval($post['recurring'])."', '".$post['recur_length']."|".$post['recur_by']."', '1')");
 		}
 		if($query){
 			return true;
 		}
 		return false;
+	}
+	
+	function generate_invoice_cron($invoice)
+	{
+		$query = $this->db->query("INSERT INTO invoices (invoice_id, client_id, project_id, items, amount_paid, invoice_description, recurring, recur_every, recur_parent) VALUES ('".(($invoice->invoice_id)+(1))."', '$invoice->client_id', '$invoice->project_id', '$invoice->items', '0.00', '$invoice->invoice_description', '1', '$invoice->recur_every', '0')");
+		// Send Email
+		$settings = $this->settings->get_settings();
+		$email_data['project_name'] = $invoice->project->name;
+		$email_data['invoice_amount'] = $invoice->amount_due;
+		$this->email->from($settings['company_email'], $settings['site_name']);
+		$this->email->to($invoice->client->email); 
+		$this->email->subject('New Invoice Billed To You');
+		$this->email->message($this->load->view('emails/new_invoice', $email_data, true));	
+		$this->email->send();
 	}
 	
 	function open_invoice($id)

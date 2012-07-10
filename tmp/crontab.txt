@@ -1,0 +1,1 @@
+0 */24 * * * php -q index.php cron generate_recurring_invoices
