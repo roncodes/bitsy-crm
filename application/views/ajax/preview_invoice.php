@@ -19,8 +19,8 @@
 		</div>
 	</div>
 	<div class="row-fluid">
-		<div class="span6"><?=$invoice_preview['description']?></div>
-		<div class="span6">
+		<div class="span5"><?=$invoice_preview['description']?></div>
+		<div class="span7">
 			<table class="table table-bordered">
 				<tbody>
 					<tr>
@@ -29,7 +29,7 @@
 					</tr>
 					<tr>
 						<td>Date</td>
-						<td><?=date('F j, Y, g:i a')?></td>
+						<td><?php if(strlen($invoice_preview['date'])>1){ $d = new DateTime(date_flip_set(str_replace('/', '-', $invoice_preview['date']))); echo $d->format('F j, Y, g:i a'); } else { echo date('F j, Y, g:i a'); } ?></td>
 					</tr>
 					<tr>
 						<td>Amount Due</td>

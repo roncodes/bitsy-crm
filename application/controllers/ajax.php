@@ -32,6 +32,7 @@ class Ajax extends MY_Controller {
 		$this->data['subtotal'] = $this->core->calculate_subtotal($this->core->parse_invoice_items_to_array($_POST));
 		$this->data['total'] = $this->core->calculate_total($this->core->parse_invoice_items_to_array($_POST));
 		$this->data['display_head'] = true;
+		$this->data['date'] = $_POST['date'];
 	}
 	
 	public function get_clients_projects($client_id = NULL, $client_projects = array())

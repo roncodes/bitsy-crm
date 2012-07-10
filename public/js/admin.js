@@ -30,6 +30,9 @@ var add_invoice_item = function() {
 	item += '<input class="span3 grouped" type="text" name="item_quanity_'+count+'"><span class="help-inline">Quanity</span>';
 	item += '</div></div>';
 	$('.items').append(item);
+	if(count>0){
+		$('.span6').css('height', '+=136');
+	}
 }
 
 var remove_item = function(id) {
@@ -62,6 +65,22 @@ var update_preview = function() {
 		$.post('../../ajax/preview_invoice', $('#generate_invoice').serialize(), function(data){
 			$('#invoice-preview').html(data);
 		});
+	}
+}
+
+var recurring_invoice_opts = function() {
+	if($('.recurring_options').is(':visible')) {
+		$('.recurring_options').fadeOut();
+	} else {
+		$('.recurring_options').fadeIn();
+	}
+}
+
+var date_invoice_opts = function() {
+	if($('.date_options').is(':visible')) {
+		$('.date_options').fadeOut();
+	} else {
+		$('.date_options').fadeIn();
 	}
 }
 

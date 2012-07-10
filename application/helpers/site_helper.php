@@ -1,5 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+function date_flip_set($date) // flips MM-DD-YYYY to YYYY-MM-DD
+{
+	list($mm, $dd, $yyyy) = explode('-', $date);
+	return $yyyy.'-'.$mm.'-'.$dd;
+}
+
 function pagination_links($config)
 {
 	$links = "<ul class='pagination'>";

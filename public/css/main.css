@@ -65,8 +65,6 @@ html {
 	-moz-background-clip: padding-box;
 	background-clip: padding-box;
 	min-height:620px;
-	max-height:650px;
-	overflow-y:auto;
 }
 #register-modal {
 	width:610px;

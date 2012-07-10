@@ -150,9 +150,17 @@ class Invoices extends MY_Controller {
 	public function create()
 	{
 		if(isset($_POST['new_invoice'])){
+			$this->form_validation->set_rules('client', 'Client', 'required');
+			$this->form_validation->set_rules('project_id', 'Project', 'required');
 			$this->form_validation->set_rules('id', 'Invoice ID', 'required|trim|xss_clean|integer');
 			$this->form_validation->set_rules('description', 'Invoice Description', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('amount_paid', 'Amount Paid', 'trim|xss_clean|decimal');
+			if(isset($_POST['recurring'])){ if(intval($_POST['recurring'])){
+				$this->form_validation->set_rules('recur_length', 'Recur Length', 'trim|xss_clean|less_than[31]|max_length[2]|is_natural_no_zero|required');
+			}}
+			if(isset($_POST['custom_date'])){ if(intval($_POST['custom_date'])){
+				$this->form_validation->set_rules('date', 'Date', 'required|callback_is_valid_date');
+			}}
 			if ($this->form_validation->run() == TRUE)
 			{
 				$gen = $this->core->generate_invoice($_POST);
@@ -181,6 +189,21 @@ class Invoices extends MY_Controller {
 		}
 		$this->data['clients'] = $clients;
 		$this->data['meta_title'] = 'Create new Invoice';
+	}
+	
+	public function is_valid_date($str)
+	{
+		if(substr_count($str, '/')==2){
+			list($mm,$dd,$yyyy) = explode('/',$str);
+		} else {
+			$this->form_validation->set_message('is_valid_date', 'The date entered is not of valid format (MM/DD/YYYY)');
+			return false;
+		}
+		if (checkdate($mm,$dd,$yyyy)) {
+			return true;
+		}
+		$this->form_validation->set_message('is_valid_date', 'The date entered is not of valid format (MM/DD/YYYY)');
+		return false;
 	}
 	
 	public function view($id = NULL)

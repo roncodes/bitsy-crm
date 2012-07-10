@@ -67,7 +67,11 @@ class Core extends CI_Model
 		$project = $this->get_project($post['project_id']);
 		$client = $this->ion_auth->get_user($project->client);
 		$items = mysql_real_escape_string(json_encode($this->parse_invoice_items_to_array($post)));
-		$query = $this->db->query("INSERT INTO invoices (invoice_id, client_id, project_id, items, amount_paid, invoice_description) VALUES ('$post[id]', '$client->id', '$post[project_id]', '$items', '$post[amount_paid]', '".mysql_real_escape_string($post['description'])."')");
+		if(intval($post['custom_date'])){
+			$query = $this->db->query("INSERT INTO invoices (invoice_id, client_id, project_id, items, amount_paid, invoice_description, recurring, recur_every) VALUES ('$post[id]', '$client->id', '$post[project_id]', '$items', '$post[amount_paid]', '".mysql_real_escape_string($post['description'])."', '".intval($post['recurring'])."', '".$post['recur_length']."|".$post['recur_by']."')");
+		} else {
+			$query = $this->db->query("INSERT INTO invoices (invoice_id, client_id, project_id, items, amount_paid, date, invoice_description, recurring, recur_every) VALUES ('$post[id]', '$client->id', '$post[project_id]', '$items', '$post[amount_paid]', '".strtotime(str_replace('/', '-', $post['date']))."', '".mysql_real_escape_string($post['description'])."', '".intval($post['recurring'])."', '".$post['recur_length']."|".$post['recur_by']."')");
+		}
 		if($query){
 			return true;
 		}

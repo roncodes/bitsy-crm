@@ -27,7 +27,6 @@ html {
 	-moz-background-clip: padding-box;
 	background-clip: padding-box;
 	min-height:500px;
-	max-height:600px;
 }
 .section-panel {
 	background:#fff;
@@ -45,7 +44,8 @@ html {
 	rgba(0, 0, 0, 0.3);
 	-webkit-background-clip: padding-box;
 	-moz-background-clip: padding-box;
-	background-clip: padding-box;}
+	background-clip: padding-box;
+}
 .admin-panel {
 	background:#fff;
 	margin-top:-110px;
@@ -66,7 +66,6 @@ html {
 	-moz-background-clip: padding-box;
 	background-clip: padding-box;
 	min-height:620px;
-	overflow-y:auto;
 }
 #register-modal {
 	width:610px;
