@@ -135,22 +135,55 @@ class Projects extends MY_Controller {
 	
 	public function invoice($id = NULL)
 	{
+		$project = $this->data['project'] = $this->core->get_project($id);
+		$client = $this->data['client'] = $this->ion_auth->get_user($project->client);
 		if(isset($_POST['new_invoice'])){
 			$this->form_validation->set_rules('id', 'Invoice ID', 'required|trim|xss_clean|integer');
 			$this->form_validation->set_rules('description', 'Invoice Description', 'required|trim|xss_clean');
 			$this->form_validation->set_rules('amount_paid', 'Amount Paid', 'trim|xss_clean|decimal');
+			if(isset($_POST['recurring'])){ if(intval($_POST['recurring'])){
+				$this->form_validation->set_rules('recur_length', 'Recur Length', 'trim|xss_clean|less_than[31]|max_length[2]|is_natural_no_zero|required');
+			}}
+			if(isset($_POST['custom_date'])){ if(intval($_POST['custom_date'])){
+				$this->form_validation->set_rules('date', 'Date', 'required|callback_is_valid_date');
+			}}
 			if ($this->form_validation->run() == TRUE)
 			{
+				// flashmsg('Form valid', 'success');
 				$gen = $this->core->generate_invoice($_POST);
 				if($gen){
+					$settings = $this->data['settings'] = $this->settings->get_settings();
+					// Send Email
+					$email_data['project_name'] = $project->name;
+					$email_data['invoice_amount'] = $this->core->calculate_total($this->core->parse_invoice_items_to_array($_POST));
+					$this->email->from($settings['company_email'], $settings['site_name']);
+					$this->email->to($client->email); 
+					$this->email->subject('New Invoice Billed To You');
+					$this->email->message($this->load->view('emails/new_invoice', $email_data, true));	
+					$this->email->send();
 					flashmsg('Invoice created successfully.', 'success');
 					redirect('/admin/projects');
+				} else {
+					flashmsg('Error occured.', 'error');
 				}
 			}
 		}
-		$project = $this->data['project'] = $this->core->get_project($id);
-		$this->data['client'] = $this->ion_auth->get_user($project->client);
 		$this->data['meta_title'] = 'Generate Invoice for Project';
+	}
+	
+	public function is_valid_date($str)
+	{
+		if(substr_count($str, '/')==2){
+			list($mm,$dd,$yyyy) = explode('/',$str);
+		} else {
+			$this->form_validation->set_message('is_valid_date', 'The date entered is not of valid format (MM/DD/YYYY)');
+			return false;
+		}
+		if (checkdate($mm,$dd,$yyyy)) {
+			return true;
+		}
+		$this->form_validation->set_message('is_valid_date', 'The date entered is not of valid format (MM/DD/YYYY)');
+		return false;
 	}
 	
 	public function edit($id = NULL)

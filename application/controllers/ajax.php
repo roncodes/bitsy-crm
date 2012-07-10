@@ -25,7 +25,9 @@ class Ajax extends MY_Controller {
 	public function preview_invoice()
 	{
 		$this->_check_permissions(); // Admin ajax function
-		$project = $this->data['project'] = $this->core->get_project($_POST['project_id']);
+		if(isset($_POST['project_id'])){
+			$project = $this->data['project'] = $this->core->get_project($_POST['project_id']);
+		}
 		$this->data['client'] = $this->ion_auth->get_user($project->client);
 		$this->data['invoice_preview'] = $_POST;
 		$this->data['items'] = $this->core->parse_invoice_items_to_array($_POST);
